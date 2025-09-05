@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	char *map[] = {
 		"1111111111",
@@ -14,6 +14,10 @@ int	main(void)
 	t_data	data;
 
 	data.map.map_data = map;
+
+	validate_arg(argc, argv);
+
+
 
 	return (0);
 }

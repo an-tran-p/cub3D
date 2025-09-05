@@ -31,4 +31,6 @@ typedef struct s_data
 	bool		colors_num[2];
 }				t_data;
 
+void	validate_arg(int argc, char **argv);
+
 #endif
