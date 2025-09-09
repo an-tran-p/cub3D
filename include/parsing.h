@@ -32,5 +32,6 @@ typedef struct s_data
 }				t_data;
 
 void	validate_arg(int argc, char **argv);
+void    print_error(char *err_msg);
 
 #endif

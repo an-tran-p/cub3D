@@ -6,5 +6,6 @@
 # include "MLX42/MLX42.h"
 
 # include "parsing.h"
+# include "err_msg.h"
 
 #endif
