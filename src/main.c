@@ -12,12 +12,14 @@ int	main(int argc, char **argv)
 		NULL
 	};
 	t_data	data;
+	int fd;
+	t_list	*head;
 
 	data.map.map_data = map;
+	fd = validate_arg(argc, argv);
+	head = parse_scene(fd);
 
-	validate_arg(argc, argv);
-
-
-
+	ft_lstclear(&head, free);
+	close(fd);
 	return (0);
 }

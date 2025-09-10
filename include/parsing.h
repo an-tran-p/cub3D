@@ -1,6 +1,8 @@
 #ifndef PARSING_H
 # define PARSING_H
 
+# include <stdio.h>
+
 typedef struct s_coords
 {
 	int			x;
@@ -31,7 +33,8 @@ typedef struct s_data
 	bool		colors_num[2];
 }				t_data;
 
-void	validate_arg(int argc, char **argv);
-void    print_error(char *err_msg);
+int				validate_arg(int argc, char **argv);
+void			print_error(char *err_msg);
+t_list			*parse_scene(int fd);
 
 #endif
