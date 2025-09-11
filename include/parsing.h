@@ -35,6 +35,7 @@ typedef struct s_data
 
 int				validate_arg(int argc, char **argv);
 void			print_error(char *err_msg);
-t_list			*parse_scene(int fd);
+int			    parse_scene(int fd, t_data *data);
+void            free_data(t_data *data);
 
 #endif
