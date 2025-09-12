@@ -5,35 +5,43 @@ uint32_t get_rgba(int r, int g, int b, int a)
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
-int validate_rgb_format(char *line)
+int check_rgb_chars(char *line, int *comma_count, int *digit_num)
 {
     int i;
-    int comma_count;
-    int digit_num;
 
     i = 0;
-    comma_count = 0;
-    digit_num = 0;
     while (line[i] && line[i] != '\n')
     {
         if (ft_isdigit(line[i]))
         {
             while (line[i] && ft_isdigit(line[i]))
                 i++;
-            digit_num++;
+            (*digit_num)++;
         }
         else if (line[i] == ',')
         {
-            comma_count++;
+            (*comma_count)++;
             i++;
         }
         else if (line[i] == ' ')
             i++;
-        else
-        {
-            print_error("Invalid RGB: invalid character\n");
+        else   
             return (1);
-        }    
+    }
+    return (0);
+}
+
+int validate_rgb_format(char *line)
+{
+    int comma_count;
+    int digit_num;
+
+    comma_count = 0;
+    digit_num = 0;
+    if (check_rgb_chars(line, &comma_count, &digit_num) != 0)
+    {
+        print_error("Invalid RGB: invalid character\n");
+        return (1);
     }
     if (digit_num != 3)
     {
@@ -45,6 +53,18 @@ int validate_rgb_format(char *line)
         print_error("Invalid RGB: expected two commas\n");
         return (1);
     }
+    return (0);
+}
+
+int parse_check_rgb_range(char *line, int *i, int *color)
+{
+    while(!ft_isdigit(line[*i]))
+        (*i)++;
+    *color = ft_atoi(line + *i);
+    if (*color < 0 || *color > 255)
+        return (-1);
+    while(ft_isdigit(line[*i]))
+        (*i)++;
     return (0);
 }
 
@@ -63,42 +83,12 @@ int save_color(uint32_t	*color, char *line)
     if (validate_rgb_format(line) != 0)
         return (1);
     i = 0;
-    while(line[i] == ' ' && line[i])
-        i++;
-    r = ft_atoi(line + i);
-    if (r < 0 || r > 255)
-    {
-        print_error("Invalid RGB: R is outside the range 0-255\n");
-        return (1);
-    }
-    while(ft_isdigit(line[i]) && line[i])
-        i++;
-    while(line[i] != ',' && line[i])
-        i++;
-    if (line[i] == ',')
-        i++;
-    while(line[i] == ' ' && line[i])
-        i++;
-    g = ft_atoi(line + i);
-    if (g < 0 || g > 255)
-    {
-        print_error("Invalid RGB: G is outside range 0-255\n");
-        return (1);
-    }
-    while(ft_isdigit(line[i]) && line[i])
-        i++;
-    while(line[i] != ',' && line[i])
-        i++;
-    if (line[i] == ',')
-        i++;
-    while(line[i] == ' ' && line[i])
-        i++;
-    b = ft_atoi(line + i);
-    if (b < 0 || b > 255)
-    {
-        print_error("Invalid RGB: B is outside range 0-255\n");
-        return (1);
-    }
+    if (parse_check_rgb_range(line, &i, &r) == -1)
+        return (print_error(MSG_INVALIB_RGB_R), 1);
+    if (parse_check_rgb_range(line, &i, &g) == -1)
+        return (print_error(MSG_INVALIB_RGB_G), 1);
+    if (parse_check_rgb_range(line, &i, &b) == -1)
+        return (print_error(MSG_INVALIB_RGB_B), 1);
     *color = get_rgba(r, g, b, 255);
     printf("%d, %d, %d\n", r, g, b);
     return (0);
