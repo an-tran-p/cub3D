@@ -37,5 +37,7 @@ int				validate_arg(int argc, char **argv);
 void			print_error(char *err_msg);
 int			    parse_scene(int fd, t_data *data);
 void            free_data(t_data *data);
+int             save_texture(char **path, char *line);
+int             save_color(uint32_t	*color, char *line);
 
 #endif

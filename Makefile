@@ -17,7 +17,7 @@ LIBFT = $(LIBFT_PATH)/libft.a
 
 OBJS_PATH = obj
 
-SRCS = src/main.c src/parsing/validate_arg.c src/parsing/utils.c src/parsing/parse.c\
+SRCS = src/main.c src/parsing/validate_arg.c src/parsing/utils.c src/parsing/parser.c  src/parsing/color_parser.c src/parsing/texture_parser.c\
 # add under SRCS paths like this - src/parsing/utils.c
 
 OBJS = $(SRCS:src/%.c=$(OBJS_PATH)/%.o)
