@@ -29,8 +29,6 @@ typedef struct s_data
 	char		*we_path;
 	char		*ea_path;
 	t_map		map;
-	bool		textures_num[4];
-	bool		colors_num[2];
 }				t_data;
 
 int				validate_arg(int argc, char **argv);

@@ -14,5 +14,7 @@
 # define MSG_INVALIB_RGB_B "Invalid RGB: B is outside the range 0-255\n"
 # define MSG_WRONG_TEXTURE_EXT "A texture file should have .png extension\n"
 # define MSG_NO_ACCESS_TO_TEXTURE "Can't access texture file\n"
+# define MSG_TEXTURE_MISSING "Missing some required texture paths\n"
+# define MSG_COLOR_MISSING "Missing some required color data\n"
 
 #endif

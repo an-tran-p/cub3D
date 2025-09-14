@@ -100,5 +100,9 @@ int parse_scene(int fd, t_data *data)
     }
     ft_lstclear(&head_list, free);
     close(fd);
+    if (!data->no_path || !data->so_path || !data->ea_path || !data->we_path)
+        return (print_error(MSG_TEXTURE_MISSING), 1);
+    if (data->f_color == (uint32_t)-1 || data->c_color == (uint32_t)-1)
+        return (print_error(MSG_COLOR_MISSING), 1);
     return (0);
 }
