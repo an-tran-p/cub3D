@@ -1,10 +1,12 @@
 #include "cub3d.h"
 
-int	check_file_access(char *file_name)
+int	check_file_access(char *path_to_file)
 {
 	int	fd;
 
-	fd = open(file_name, O_RDONLY);
+    if (!path_to_file)
+        return (1);
+	fd = open(path_to_file, O_RDONLY);
 	if (fd == -1)
 	{
 		if (errno == ENOENT)
@@ -20,14 +22,14 @@ int	check_file_access(char *file_name)
 	return (fd);
 }
 
-void	check_ext(char *file_name)
+void	check_ext(char *path_to_file)
 {
 	char	*ptr;
 
-	ptr = ft_strrchr(file_name, '.');
+	ptr = ft_strrchr(path_to_file, '.');
 	if (!ptr || (ft_strcmp(ptr, ".cub") != 0))
 	{
-		print_error(MSG_WRONG_EXT);
+		print_error(MSG_WRONG_FILE_EXT);
 		exit(1);
 	}
 }
