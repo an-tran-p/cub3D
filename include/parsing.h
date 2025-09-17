@@ -36,7 +36,7 @@ void			print_error(char *err_msg);
 int			    parse_scene(int fd, t_data *data);
 void            free_data(t_data *data);
 int             save_color(uint32_t	*color, char *line);
-int             save_texture(char **texture_path, char *line, int id_pos);
+int             save_texture(char **texture_path, char *line, int id_pos, t_data *data);
 
 
 #endif

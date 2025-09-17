@@ -46,22 +46,22 @@ int	parse_identifiers(t_list *head, t_data *data)
 			break ;
         if (line[i] == 'N')
         {
-            if (save_texture(&data->no_path, line, i) != 0)
+            if (save_texture(&data->no_path, line, i, data) != 0)
                 return (1);
         }
         else if (line[i] == 'S')
         {
-            if (save_texture(&data->so_path, line, i))
+            if (save_texture(&data->so_path, line, i, data) != 0)
                 return (1);
         }
         else if (line[i] == 'W')
         {
-            if (save_texture(&data->we_path, line, i))
+            if (save_texture(&data->we_path, line, i, data) != 0)
                 return (1);
         }
         else if (line[i] == 'E')
         {
-            if (save_texture(&data->ea_path, line, i))
+            if (save_texture(&data->ea_path, line, i, data) != 0)
                 return (1);
         }
 		else if (line[i] == 'F' && line[i + 1] == ' ')
