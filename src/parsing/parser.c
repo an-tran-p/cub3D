@@ -44,41 +44,38 @@ int	parse_identifiers(t_list *head, t_data *data)
 			i++;
 		if (ft_isdigit(line[i])) // need better check for map start
 			break ;
-		if (line[i] == 'N' && line[i + 1] == 'O' && line[i + 2] == ' ')
-		{
-			if (save_texture(&data->no_path, line + (i + 2)) != 0)
-				return (1);
-		}
-		else if (line[i] == 'S' && line[i + 1] == 'O' && line[i + 2] == ' ')
-		{
-			if (save_texture(&data->so_path, line + (i + 2)) != 0)
-				return (1);
-		}
-		else if (line[i] == 'W' && line[i + 1] == 'E' && line[i + 2] == ' ')
-		{
-			if (save_texture(&data->we_path, line + (i + 2)) != 0)
-				return (1);
-		}
-		else if (line[i] == 'E' && line[i + 1] == 'A' && line[i + 2] == ' ')
-		{
-			if (save_texture(&data->ea_path, line + (i + 2)) != 0)
-				return (1);
-		}
+        if (line[i] == 'N')
+        {
+            if (save_texture(&data->no_path, line, i) != 0)
+                return (1);
+        }
+        else if (line[i] == 'S')
+        {
+            if (save_texture(&data->so_path, line, i))
+                return (1);
+        }
+        else if (line[i] == 'W')
+        {
+            if (save_texture(&data->we_path, line, i))
+                return (1);
+        }
+        else if (line[i] == 'E')
+        {
+            if (save_texture(&data->ea_path, line, i))
+                return (1);
+        }
 		else if (line[i] == 'F' && line[i + 1] == ' ')
-		{
-			if (save_color(&data->f_color, line + (i + 1)) != 0)
-				return (1);
-		}
+        {
+            if (save_color(&data->f_color, line + i + 1))
+			    return (1);
+        }
 		else if (line[i] == 'C' && line[i + 1] == ' ')
-		{
-			if (save_color(&data->c_color, line + (i + 1)) != 0)
-				return (1);
-		}
+        {
+            if (save_color(&data->c_color, line + i + 1))
+			    return (1);
+        }
 		else
-		{
-			print_error("Missing or invalid identifier\n");
-			return (1);
-		}
+			return (print_error("Missing or invalid identifier\n"), 1);
 		curr = curr->next;
 	}
 	printf("%x\n%x\n", data->f_color, data->c_color);
@@ -90,6 +87,7 @@ int	parse_scene(int fd, t_data *data)
 	t_list	*head_list;
 
 	head_list = read_file_to_list(fd);
+    close(fd);
 	if (!head_list)
 		return (1);
 	ft_memset(data, 0, sizeof(t_data));
@@ -103,7 +101,6 @@ int	parse_scene(int fd, t_data *data)
 		return (1);
 	}
 	ft_lstclear(&head_list, free);
-	close(fd);
 	if (!data->no_path || !data->so_path || !data->ea_path || !data->we_path)
 		return (print_error(MSG_TEXTURE_MISSING), 1);
 	if (data->f_color == (uint32_t)-1 || data->c_color == (uint32_t)-1)
