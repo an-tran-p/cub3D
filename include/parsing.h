@@ -32,7 +32,7 @@ typedef struct s_data
  }				t_data;
 
 int				validate_arg(int argc, char **argv);
-void			print_error(char *err_msg);
+int			print_error(char *err_msg);
 int			    parse_scene(int fd, t_data *data);
 void            free_data(t_data *data);
 int             save_color(uint32_t	*color, char *line);

@@ -66,20 +66,42 @@ int	parse_identifiers(t_list *head, t_data *data)
         }
 		else if (line[i] == 'F' && line[i + 1] == ' ')
         {
-            if (save_color(&data->f_color, line + i + 1))
+            if (save_color(&data->f_color, line + i + 2))
 			    return (1);
         }
 		else if (line[i] == 'C' && line[i + 1] == ' ')
         {
-            if (save_color(&data->c_color, line + i + 1))
+            if (save_color(&data->c_color, line + i + 2))
 			    return (1);
         }
 		else
 			return (print_error("Missing or invalid identifier\n"), 1);
 		curr = curr->next;
 	}
-	printf("%x\n%x\n", data->f_color, data->c_color);
+    if (data->f_color != (uint32_t)-1)
+	    printf("F - %x\n", data->f_color);
+    if (data->c_color != (uint32_t)-1)
+	    printf("C - %x\n", data->c_color);
 	return (0);
+}
+int check_required_elements(t_data *data)
+{
+    int has_error;
+
+    has_error = 0;
+    if (!data->no_path && print_error(MSG_MISSING_NO))
+        has_error = 1;
+    if (!data->so_path && print_error(MSG_MISSING_SO)) 
+        has_error = 1;
+    if (!data->ea_path && print_error(MSG_MISSING_EA))
+        has_error = 1;
+    if (!data->we_path && print_error(MSG_MISSING_WE))
+        has_error = 1;
+    if (data->f_color == (uint32_t)-1 && print_error(MSG_MISSING_F))
+        has_error = 1;
+    if (data->c_color == (uint32_t)-1 && print_error(MSG_MISSING_C))
+        has_error = 1;
+    return (has_error);
 }
 
 int	parse_scene(int fd, t_data *data)
@@ -101,9 +123,7 @@ int	parse_scene(int fd, t_data *data)
 		return (1);
 	}
 	ft_lstclear(&head_list, free);
-	if (!data->no_path || !data->so_path || !data->ea_path || !data->we_path)
-		return (print_error(MSG_TEXTURE_MISSING), 1);
-	if (data->f_color == (uint32_t)-1 || data->c_color == (uint32_t)-1)
-		return (print_error(MSG_COLOR_MISSING), 1);
+    if (check_required_elements(data) != 0)
+        return (1);
 	return (0);
 }

@@ -1,9 +1,10 @@
 #include "cub3d.h"
 
-void    print_error(char *err_msg)
+int    print_error(char *err_msg)
 {
     ft_putstr_fd("Error\n", STDERR_FILENO);
     ft_putstr_fd(err_msg, STDERR_FILENO);
+    return (1);
 }
 
 void    free_data(t_data *data)
