@@ -24,6 +24,27 @@ t_list	*read_file_to_list(int fd)
 	return (head);
 }
 
+int parse_color_ids(char *line, int i, t_data *data)
+{
+    if (line[i] == 'F' && (line[i + 1] == ' ' || 
+        line[i + 1] == '\n' || line[i + 1] == '\0'))
+    {
+        if (save_color(&data->f_color, line + i + 2) != 0)
+            return (1);
+    }
+    else if (line[i] == 'C' && (line[i + 1] == ' ' || 
+        line[i + 1] == '\n' || line[i + 1] == '\0'))
+    {
+        if (save_color(&data->c_color, line + i + 2) != 0)
+            return (1);
+    }
+    else if (ft_isdigit(line[i + 1]))
+        return (print_error("Missing space after color identifier\n"), 1);
+    else
+        return (print_error("Invalid color identifier\n"), 1);
+    return (0);
+}
+
 int	parse_identifiers(t_list *head, t_data *data)
 {
 	t_list	*curr;
@@ -64,15 +85,10 @@ int	parse_identifiers(t_list *head, t_data *data)
             if (save_texture(&data->ea_path, line, i, data) != 0)
                 return (1);
         }
-		else if (line[i] == 'F' && line[i + 1] == ' ')
+        else if (line[i] == 'F' || line[i] == 'C')
         {
-            if (save_color(&data->f_color, line + i + 2))
-			    return (1);
-        }
-		else if (line[i] == 'C' && line[i + 1] == ' ')
-        {
-            if (save_color(&data->c_color, line + i + 2))
-			    return (1);
+            if (parse_color_ids(line, i, data) != 0)
+                return (1);
         }
 		else
 			return (print_error("Missing or invalid identifier\n"), 1);

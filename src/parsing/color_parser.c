@@ -76,19 +76,16 @@ int save_color(uint32_t	*color, char *line)
     int b;
 
     if (*color != (uint32_t)-1)
-    {
-        print_error("Duplicate color identifier\n");
-        return (1);
-    }
+        return (print_error("Duplicate color identifier\n"), 1);
     if (validate_rgb_format(line) != 0)
         return (1);
     i = 0;
     if (parse_check_rgb_range(line, &i, &r) == -1)
-        return (print_error(MSG_INVALIB_RGB_R), 1);
+        return (print_error(MSG_INVALID_RGB_R), 1);
     if (parse_check_rgb_range(line, &i, &g) == -1)
-        return (print_error(MSG_INVALIB_RGB_G), 1);
+        return (print_error(MSG_INVALID_RGB_G), 1);
     if (parse_check_rgb_range(line, &i, &b) == -1)
-        return (print_error(MSG_INVALIB_RGB_B), 1);
+        return (print_error(MSG_INVALID_RGB_B), 1);
     *color = get_rgba(r, g, b, 255);
     printf("%d, %d, %d\n", r, g, b);
     return (0);
