@@ -87,7 +87,7 @@ int validate_texture_line(char *line, int id_pos)
     return (0);
 }
 
-int     save_texture_path(char **tex_path, char *path_start)
+int     save_texture_path(char **texture_path, char *path_start)
 {
         int     i;
         size_t  len;
@@ -95,12 +95,10 @@ int     save_texture_path(char **tex_path, char *path_start)
         i = 0;
         while (path_start[i] == ' ')
             i++;
-        if (*tex_path)
-            return (print_error("Duplicate texture identifier\n"), 1);
         len = count_path_len(path_start + i);
-        *tex_path = ft_strndup(path_start + i, len);
-        printf("%s ", *tex_path);
-        if (!(*tex_path))
+        *texture_path = ft_strndup(path_start + i, len);
+        printf("%s ", *texture_path);
+        if (!(*texture_path))
             return (print_error("Malloc failed\n"), 1);
         return (0);
 }
@@ -109,7 +107,9 @@ int     save_texture(char **texture_path, char *line, int id_pos)
 {
     char    *path_start;
 
-    if (validate_texture_line(line, id_pos) != 0) //N
+    if (*texture_path)
+        return (print_error("Duplicate texture identifier\n"), 1);
+    if (validate_texture_line(line, id_pos) != 0)
         return (1);
     path_start = line + id_pos + 3;
     if (save_texture_path(texture_path, path_start) != 0)
