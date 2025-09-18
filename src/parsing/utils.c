@@ -23,3 +23,18 @@ void    free_data(t_data *data)
         free(data->map.map_data);
     }
 }
+
+int has_map_chars(char *line)
+{
+    int i;
+
+    i = 0;
+    while (line[i] && line[i] != '\n')
+    {
+        if (line[i] == '1' || line[i] == '0' || line[i] == 'S' || 
+            line[i] == 'N' || line[i] == 'E' || line[i] == 'W')
+            return (1);
+        i++;
+    }
+    return (0);
+}

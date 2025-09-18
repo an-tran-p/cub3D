@@ -50,6 +50,7 @@ int	parse_identifiers(t_list *head, t_data *data)
 	t_list	*curr;
 	char	*line;
 	int		i;
+    int     map_res;
 
 	curr = head;
 	while (curr)
@@ -63,8 +64,6 @@ int	parse_identifiers(t_list *head, t_data *data)
 		}
 		while (line[i] == ' ')
 			i++;
-		if (ft_isdigit(line[i])) // need better check for map start
-			break ;
         if (line[i] == 'N')
         {
             if (save_texture(&data->no_path, line, i, data) != 0)
@@ -91,7 +90,21 @@ int	parse_identifiers(t_list *head, t_data *data)
                 return (1);
         }
 		else
-			return (print_error("Missing or invalid identifier\n"), 1);
+        {
+            if (has_map_chars(line + i))
+            {
+                map_res = is_map(line + i);
+                if (map_res == 1)
+                {
+                    data->map_start_node = curr;
+                    break ;
+                }
+                else if (map_res == 2)
+                    return (1);
+            }
+            else
+                return (print_error("Missing or invalid identifier\n"), 1);
+        }
 		curr = curr->next;
 	}
     if (data->f_color != (uint32_t)-1)
@@ -131,15 +144,33 @@ int	parse_scene(int fd, t_data *data)
 	ft_memset(data, 0, sizeof(t_data));
 	data->f_color = (uint32_t)-1;
 	data->c_color = (uint32_t)-1;
-	if (parse_identifiers(head_list, data) == 1)
+	if (parse_identifiers(head_list, data) != 0)
 	{
 		ft_lstclear(&head_list, free);
 		free_data(data);
-		close(fd);
 		return (1);
-	}
-	ft_lstclear(&head_list, free);
+    }
     if (check_required_elements(data) != 0)
-        return (1);
+    {
+        ft_lstclear(&head_list, free);
+		free_data(data);
+		return (1);
+    }
+    if (data->map_start_node == NULL)
+    {
+        ft_lstclear(&head_list, free);
+		free_data(data);
+		return (print_error("Map is missing\n"), 1);
+    }
+    if (data->map_start_node != NULL)
+        print_error("Map will be parsed!\n");
+    // if (parse_map(data->map_start_node, data) != 0)
+    // {
+    //     ft_lstclear(&head_list, free);
+	// 	free_data(data);
+	// 	return (1);
+    // }
+
+	ft_lstclear(&head_list, free);
 	return (0);
 }

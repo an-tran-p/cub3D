@@ -28,6 +28,7 @@ typedef struct s_data
 	char		*so_path;
 	char		*we_path;
 	char		*ea_path;
+    t_list      *map_start_node;
 	t_map		map;
  }				t_data;
 
@@ -36,7 +37,9 @@ int			print_error(char *err_msg);
 int			    parse_scene(int fd, t_data *data);
 void            free_data(t_data *data);
 int             save_color(uint32_t	*color, char *line);
-int             save_texture(char **texture_path, char *line, int id_pos, t_data *data);
+int save_texture(char **texture_path, char *line, int id_pos, t_data *data);
+int             is_map(char *line);
+int             has_map_chars(char *line);
 
 
 #endif
