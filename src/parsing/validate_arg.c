@@ -4,8 +4,8 @@ int	check_file_access(char *path_to_file)
 {
 	int	fd;
 
-    if (!path_to_file)
-        return (1);
+	if (!path_to_file)
+		return (1);
 	fd = open(path_to_file, O_RDONLY);
 	if (fd == -1)
 	{
