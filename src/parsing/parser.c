@@ -162,15 +162,12 @@ int	parse_scene(int fd, t_data *data)
 		free_data(data);
 		return (print_error("Map is missing\n"), 1);
     }
-    if (data->map_start_node != NULL)
-        print_error("Map will be parsed!\n");
-    // if (parse_map(data->map_start_node, data) != 0)
-    // {
-    //     ft_lstclear(&head_list, free);
-	// 	free_data(data);
-	// 	return (1);
-    // }
-
+    if (parse_map(data->map_start_node, data) != 0)
+    {
+        ft_lstclear(&head_list, free);
+		free_data(data);
+		return (1);
+    }
 	ft_lstclear(&head_list, free);
 	return (0);
 }
