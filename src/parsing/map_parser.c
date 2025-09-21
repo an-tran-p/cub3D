@@ -7,7 +7,7 @@ int is_map(char *line)
 
 	map_chars = 0;
 	i = 0;
-	while (line[i] && line[i] != '\n')
+	while (line[i])
 	{
 		if (line[i] == '1' || line[i] == '0' || line[i] == 'S' ||
 			line[i] == 'N' || line[i] == 'E' || line[i] == 'W')
@@ -27,7 +27,7 @@ int get_line_length(char *line)
 	int last_index;
 
 	last_index = ft_strlen(line) - 1;
-	while (last_index >= 0 && (line[last_index] == '\n' || line[last_index] == ' '))
+	while (last_index >= 0 && line[last_index] == ' ')
 		last_index--;
 	return (last_index + 1);
 }
@@ -105,6 +105,8 @@ int parse_map(t_list *map_start_node, t_data *data)
 		return (print_error(MSG_NO_PLAYER), 1);
 	data->map.height = num_lines - has_empty_line;
 	data->map.width = max_width;
+    // if (build_map_grid(map_start_node, data) != 0)
+    //     return (1);
 	printf("width - %d\n", data->map.width);
 	printf("height - %d\n", data->map.height);
 	printf("position - %c\n", data->map.direction);

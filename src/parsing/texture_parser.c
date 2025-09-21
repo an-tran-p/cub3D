@@ -32,7 +32,7 @@ int count_path_len(char *line)
     size_t  len;
 
     len = 0;
-    while (line[len] && line[len] != '\n' && line[len] != ' ')
+    while (line[len] && line[len] != ' ')
         len++;
     return (len);
 }
@@ -47,7 +47,7 @@ int check_identifier(char *line, int i)
         return (print_error("Unknown identifier starts with W\n"), 1);
     else if (line[i] == 'E' && line[i + 1] != 'A')
         return (print_error("Unknown identifier starts with E\n"), 1);
-    if (line[i + 2] == '\0' || line[i + 2] == '\n')
+    if (line[i + 2] == '\0')
         return (print_error("Missing texture path\n"), 1);
     if (line[i] == 'N' && line[i + 2] != ' ')
         return (print_error("No space after NO identifier\n"), 1);
@@ -71,15 +71,15 @@ int validate_texture_line(char *line, int id_pos)
     i = 0;
     while (path_start[i] && path_start[i] == ' ')
         i++;
-    if (path_start[i] == '\0' || path_start[i] == '\n')
+    if (path_start[i] == '\0')
         return (print_error("Missing texture path\n"), 1);
-    while (path_start[i] && path_start[i] != '\n')
+    while (path_start[i])
     {
         if(path_start[i] == ' ')
         {
             while (path_start[i] && path_start[i] == ' ')
                 i++;
-            if (path_start[i] != '\0' && path_start[i] != '\n')
+            if (path_start[i] != '\0')
                 return (print_error("Invalid extra characters in a texture line\n"), 1);
         }
         i++;

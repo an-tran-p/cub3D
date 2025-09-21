@@ -5,6 +5,7 @@ t_list	*read_file_to_list(int fd)
 	char	*line;
 	t_list	*node;
 	t_list	*head;
+    char    *ptr;
 
 	head = NULL;
 	while (1)
@@ -12,6 +13,9 @@ t_list	*read_file_to_list(int fd)
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
+        ptr = ft_strchr(line, '\n');
+        if (ptr)
+            *ptr = '\0';
 		node = ft_lstnew(line);
 		if (!node)
 		{
@@ -27,13 +31,13 @@ t_list	*read_file_to_list(int fd)
 int parse_color_ids(char *line, int i, t_data *data)
 {
     if (line[i] == 'F' && (line[i + 1] == ' ' || 
-        line[i + 1] == '\n' || line[i + 1] == '\0'))
+        line[i + 1] == '\0'))
     {
         if (save_color(&data->f_color, line + i + 2) != 0)
             return (1);
     }
     else if (line[i] == 'C' && (line[i + 1] == ' ' || 
-        line[i + 1] == '\n' || line[i + 1] == '\0'))
+        line[i + 1] == '\0'))
     {
         if (save_color(&data->c_color, line + i + 2) != 0)
             return (1);
@@ -57,7 +61,7 @@ int	parse_identifiers(t_list *head, t_data *data)
 	{
 		i = 0;
 		line = (char *)curr->content;
-		if (line[0] == '\n' || line[0] == '\0')
+		if (line[0] == '\0')
 		{
 			curr = curr->next;
 			continue ;
