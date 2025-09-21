@@ -29,7 +29,7 @@ int has_map_chars(char *line)
     int i;
 
     i = 0;
-    while (line[i] && line[i] != '\n')
+    while (line[i])
     {
         if (line[i] == '1' || line[i] == '0' || line[i] == 'S' || 
             line[i] == 'N' || line[i] == 'E' || line[i] == 'W')
