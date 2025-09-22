@@ -65,7 +65,6 @@ int validate_player(char *line, t_data *data)
 	return (0);
 }
 
-
 int parse_map(t_list *map_start_node, t_data *data)
 {
 	t_list *curr;
@@ -91,7 +90,7 @@ int parse_map(t_list *map_start_node, t_data *data)
 		else if (res_map == 1)
 		{
 			if (has_empty_line)
-				return (print_error("Map can't be separated by empty lines\n"), 1);
+				return (print_error(MSG_EMPTY_LINES), 1);
 			if (validate_player(line, data) != 0)
 				return (1);
 		}
@@ -106,6 +105,8 @@ int parse_map(t_list *map_start_node, t_data *data)
 	data->map.height = num_lines - has_empty_line;
 	data->map.width = max_width;
     if (build_map_grid(map_start_node, data) != 0)
+        return (1);
+    if (validate_walls(data) != 0)
         return (1);
 	printf("width - %d\n", data->map.width);
 	printf("height - %d\n", data->map.height);

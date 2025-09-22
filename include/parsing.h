@@ -42,5 +42,6 @@ int is_map(char *line);
 int has_map_chars(char *line);
 int parse_map(t_list *map_start_node, t_data *data);
 int build_map_grid(t_list *map_start_node, t_data *data);
+int validate_walls(t_data *data);
 
 #endif

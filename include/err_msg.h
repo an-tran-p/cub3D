@@ -22,5 +22,9 @@
 #define MSG_MISSING_C "Missing ceiling color (C)\n"
 #define MSG_TOO_MANY_PLAYERS "Only one player start position allowed in the map\n"
 #define MSG_NO_PLAYER "Player start position required\n"
+#define MSG_NO_WALL "The map must be closed by walls\n"
+#define MSG_EMPTY_LINES "Empty lines inside the map are not allowed\n"
+#define MSG_EMPTY_SPACES "Spaces inside the map must be closed by walls\n"
+
 
 #endif
