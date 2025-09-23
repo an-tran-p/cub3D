@@ -1,40 +1,44 @@
 #include "cub3d.h"
 
-int    print_error(char *err_msg)
+int print_error(char *err_msg)
 {
-    ft_putstr_fd("Error\n", STDERR_FILENO);
-    ft_putstr_fd(err_msg, STDERR_FILENO);
-    return (1);
+	ft_putstr_fd("Error\n", STDERR_FILENO);
+	ft_putstr_fd(err_msg, STDERR_FILENO);
+	return (1);
 }
 
-void    free_data(t_data *data)
+void free_data(t_data *data)
 {
-    int rows;
+	int rows;
 
-    rows = data->map.height;
-    free(data->no_path);
-    free(data->so_path);
-    free(data->we_path);
-    free(data->ea_path);
-    if (data->map.map_data)
-    {
-        while (--rows >= 0)
-            free(data->map.map_data[rows]);
-        free(data->map.map_data);
-    }
+	rows = data->map.height;
+	free(data->no_path);
+	free(data->so_path);
+	free(data->we_path);
+	free(data->ea_path);
+	if (data->map.map_data)
+	{
+		while (--rows >= 0)
+			free(data->map.map_data[rows]);
+		free(data->map.map_data);
+	}
 }
 
 int has_map_chars(char *line)
 {
-    int i;
+	int i;
+	int has_map_chars;
 
-    i = 0;
-    while (line[i])
-    {
-        if (line[i] == '1' || line[i] == '0' || line[i] == 'S' || 
-            line[i] == 'N' || line[i] == 'E' || line[i] == 'W')
-            return (1);
-        i++;
-    }
-    return (0);
+	i = 0;
+	has_map_chars = 0;
+	while (line[i])
+	{
+		if (line[i] == ',' || line[i] == '.' || line[i] == '/')
+			return (0);
+
+		if (line[i] == '1' || line[i] == '0')
+			has_map_chars = 1;
+		i++;
+	}
+	return (has_map_chars);
 }
