@@ -16,8 +16,6 @@ typedef struct s_map
     int height;
     t_coords player;
     char direction;
-    int max_width;
-    bool is_valid;
 } t_map;
 
 typedef struct s_data
@@ -43,5 +41,6 @@ int has_map_chars(char *line);
 int parse_map(t_list *map_start_node, t_data *data);
 int build_map_grid(t_list *map_start_node, t_data *data);
 int validate_walls(t_data *data);
+int validate_map_connectivity(t_data *data);
 
 #endif

@@ -1,5 +1,32 @@
 #include "cub3d.h"
 
+int is_internal_space(char *line, int col)
+{
+    int i;
+    int cont_before;
+    int cont_after;
+
+    i = 0;
+    cont_before = 0;
+    cont_after = 0;
+    while (i < col)
+    {
+        if (line[i] != ' ')
+            cont_before = 1;
+        i++;
+    }
+    i = col;
+    while (line[i])
+    {
+        if (line[i] != ' ')
+            cont_after = 1;
+        i++;
+    }
+    if (cont_before && cont_after)
+        return (1);
+    return (0);
+}
+
 int check_diagonal_cells(char **map, int row, int col)
 {
     int coord[4][2] = {{1,1}, {1, -1}, {-1, 1}, {-1, -1}};
@@ -14,18 +41,15 @@ int check_diagonal_cells(char **map, int row, int col)
         new_col = col + coord[i][1];
         if (map[new_row][new_col] == ' ')
         {
-            while (map[row][new_col])
-            {
-                if (map[row][new_col] != ' ')  
-                    return(print_error(MSG_EMPTY_SPACES), 1);
-                new_col++;
-            }
+            if (is_internal_space(map[new_row], new_col))
+                return(print_error(MSG_EMPTY_SPACES), 1);
             return(print_error(MSG_NO_WALL), 1);
         }
         i++;
     }
     return (0);
 }
+
 
 int check_adjacent_cells(char **map, int row, int col, t_data *data)
 {
@@ -47,12 +71,8 @@ int check_adjacent_cells(char **map, int row, int col, t_data *data)
             return(print_error(MSG_NO_WALL), 1);
         if (map[new_row][new_col] == ' ')
         {
-            while (map[row][new_col])
-            {
-                if (map[row][new_col] != ' ')
-                    return(print_error(MSG_EMPTY_SPACES), 1);
-                new_col++;
-            }
+            if (is_internal_space(map[new_row], new_col))
+                return(print_error(MSG_EMPTY_SPACES), 1);
             return(print_error(MSG_NO_WALL), 1);
         }
         i++;

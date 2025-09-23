@@ -106,8 +106,10 @@ int parse_map(t_list *map_start_node, t_data *data)
 	data->map.width = max_width;
     if (build_map_grid(map_start_node, data) != 0)
         return (1);
-    if (validate_walls(data) != 0)
+        if (validate_walls(data) != 0)
         return (1);
+    if (validate_map_connectivity(data) != 0)
+            return (1);
 	printf("width - %d\n", data->map.width);
 	printf("height - %d\n", data->map.height);
 	printf("position - %c\n", data->map.direction);
