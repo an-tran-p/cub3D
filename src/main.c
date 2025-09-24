@@ -18,7 +18,7 @@ int	main(int argc, char **argv)
 	fd = validate_arg(argc, argv);
 	if (parse_scene(fd, &data) != 0)
     {
-        print_error("Parsing failed\n");
+        free_data(&data);
         return (1);
     }
     
