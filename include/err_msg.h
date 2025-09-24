@@ -25,6 +25,7 @@
 #define MSG_NO_WALL "The map must be closed by walls\n"
 #define MSG_EMPTY_LINES "Empty lines inside the map are not allowed\n"
 #define MSG_EMPTY_SPACES "Spaces inside the map must be closed by walls\n"
+#define MSG_DUP_TEXTURE "Duplicate texture path\n"
 
 
 #endif

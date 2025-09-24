@@ -96,14 +96,18 @@ int     save_texture_path(char **texture_path, char *path_start, t_data *data)
         while (path_start[i] == ' ')
             i++;
         len = count_path_len(path_start + i);
-        if (data->no_path && !ft_strncmp(path_start + i, data->no_path, len))
-            return(print_error("Duplicate texture path\n"), 1);
-        if (data->so_path && !ft_strncmp(path_start + i, data->so_path, len))
-            return(print_error("Duplicate texture path\n"), 1);
-        if (data->we_path && !ft_strncmp(path_start + i, data->we_path, len))
-            return(print_error("Duplicate texture path\n"), 1);
-        if (data->ea_path && !ft_strncmp(path_start + i, data->ea_path, len))
-            return(print_error("Duplicate texture path\n"), 1);
+        if (data->no_path && len == ft_strlen(data->no_path) && 
+            !ft_strncmp(path_start + i, data->no_path, len))
+            return(print_error(MSG_DUP_TEXTURE), 1);
+        if (data->so_path && len == ft_strlen(data->so_path) && 
+            !ft_strncmp(path_start + i, data->so_path, len))
+            return(print_error(MSG_DUP_TEXTURE), 1);
+        if (data->we_path && len == ft_strlen(data->we_path) && 
+            !ft_strncmp(path_start + i, data->we_path, len))
+            return(print_error(MSG_DUP_TEXTURE), 1);
+        if (data->ea_path && len == ft_strlen(data->ea_path) && 
+            !ft_strncmp(path_start + i, data->ea_path, len))
+            return(print_error(MSG_DUP_TEXTURE), 1);
         *texture_path = ft_strndup(path_start + i, len);
         printf("%s ", *texture_path);
         if (!(*texture_path))
