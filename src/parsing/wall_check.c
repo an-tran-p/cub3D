@@ -1,10 +1,10 @@
 #include "cub3d.h"
 
-int is_internal_space(char *line, int col)
+int	is_internal_space(char *line, int col)
 {
-	int i;
-	int cont_before;
-	int cont_after;
+	int	i;
+	int	cont_before;
+	int	cont_after;
 
 	i = 0;
 	cont_before = 0;
@@ -27,12 +27,12 @@ int is_internal_space(char *line, int col)
 	return (0);
 }
 
-int check_diagonal_cells(char **map, int row, int col)
+int	check_diagonal_cells(char **map, int row, int col)
 {
-	int coord[4][2] = {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
-	int i;
-	int new_row;
-	int new_col;
+	int	coord[4][2] = {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+	int	i;
+	int	new_row;
+	int	new_col;
 
 	i = 0;
 	while (i < 4)
@@ -50,14 +50,14 @@ int check_diagonal_cells(char **map, int row, int col)
 	return (0);
 }
 
-int check_adjacent_cells(char **map, int row, int col, t_data *data)
+int	check_adjacent_cells(char **map, int row, int col, t_data *data)
 {
-	int coord[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-	int i;
-	int new_row;
-	int new_col;
-	int width;
-	int height;
+	int	coord[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+	int	i;
+	int	new_row;
+	int	new_col;
+	int	width;
+	int	height;
 
 	i = 0;
 	width = data->map.width;
@@ -79,11 +79,11 @@ int check_adjacent_cells(char **map, int row, int col, t_data *data)
 	return (0);
 }
 
-int validate_walls(t_data *data)
+int	validate_walls(t_data *data)
 {
-	char **map;
-	int i;
-	int j;
+	char	**map;
+	int		i;
+	int		j;
 
 	i = 0;
 	map = data->map.map_data;
@@ -104,9 +104,9 @@ int validate_walls(t_data *data)
 	return (0);
 }
 
-void fill_map_line(char *dst, char *src, int width)
+void	fill_map_line(char *dst, char *src, int width)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (src[j] && j < width)
@@ -122,12 +122,12 @@ void fill_map_line(char *dst, char *src, int width)
 	dst[width] = '\0';
 }
 
-int build_map_grid(t_list *map_start_node, t_data *data)
+int	build_map_grid(t_list *map_start_node, t_data *data)
 {
-	int i;
-	char **map;
-	t_list *curr;
-	char *line;
+	int		i;
+	char	**map;
+	t_list	*curr;
+	char	*line;
 
 	map = ft_calloc(data->map.height + 1, sizeof(char *));
 	if (!map)
@@ -145,7 +145,5 @@ int build_map_grid(t_list *map_start_node, t_data *data)
 		curr = curr->next;
 	}
 	data->map.map_data = map;
-	printf("%s\n", data->map.map_data[0]);
-	printf("%s\n", data->map.map_data[1]);
 	return (0);
 }
