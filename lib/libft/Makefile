@@ -6,7 +6,7 @@
 #    By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/14 11:56:03 by ikozhina          #+#    #+#              #
-#    Updated: 2025/03/24 11:01:28 by ikozhina         ###   ########.fr        #
+#    Updated: 2025/09/12 15:36:26 by ikozhina         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c \
 		ft_lstnew.c ft_lstadd_back.c ft_lstadd_front.c ft_lstdelone.c ft_lstlast.c \
 		ft_lstsize.c ft_lstclear.c ft_printf/ft_printf.c ft_printf/ft_putchar.c \
 		ft_printf/ft_putstr.c ft_printf/ft_putnbr.c ft_printf/ft_putnbr_unsigned.c \
-		ft_printf/ft_putptr.c ft_strcmp.c get_next_line.c
+		ft_printf/ft_putptr.c ft_strcmp.c get_next_line.c ft_strndup.c
 
 OBJS = $(SRCS:.c=.o)
 
