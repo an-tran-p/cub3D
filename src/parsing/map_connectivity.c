@@ -96,7 +96,6 @@ int validate_map_connectivity(t_data *data)
 	int width;
 
 	find_player_coords(data);
-	printf("x -%d y - %d\n", data->map.player.x, data->map.player.y);
 	map_copy = build_map_copy(data->map.height, data);
 	if (!map_copy)
 		return (1);
