@@ -64,6 +64,20 @@ int	validate_player(char *line, t_data *data)
 	}
 	return (0);
 }
+float	add_angle(t_data *data)
+{
+	char dir;
+
+	dir = data->map.direction;
+	if (dir == 'N')
+		return(M_PI / 2);
+	else if (dir == 'S')
+		return (3 * M_PI) / 2;
+	else if (dir == 'W')
+		return(M_PI);
+	else
+		return (0);
+}
 
 int	parse_map(t_list *map_start_node, t_data *data)
 {
@@ -104,6 +118,7 @@ int	parse_map(t_list *map_start_node, t_data *data)
 		return (print_error(MSG_NO_PLAYER), 1);
 	data->map.height = num_lines - has_empty_line;
 	data->map.width = max_width;
+	data->map.player.angle = add_angle(data);
 	if (build_map_grid(map_start_node, data) != 0)
 		return (1);
 	if (validate_walls(data) != 0)
