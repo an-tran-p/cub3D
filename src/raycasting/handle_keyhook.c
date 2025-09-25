@@ -58,7 +58,7 @@ void	game_loop(void *param)
 		return ;
 	if (CUB2D)
 	{
-		draw_block(player->x, player->y, BLOCK, 0xFF0000FF, game);
+		draw_block(player->x, player->y, 1, 0xFF0000FF, game);
 		draw_map(game, game->data->map.map_data);
 	}
 	casting_ray(game);

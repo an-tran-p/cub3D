@@ -92,7 +92,7 @@ void	init_game(t_game *game, t_coords *player)
 		return ;
 	if (CUB2D)
 	{
-		draw_block(player->x, player->y, BLOCK, 0xFF0000FF, game);
+		draw_block(player->x, player->y, 1, 0xFF0000FF, game);
 		draw_map(game, game->data->map.map_data);
 	}
 	mlx_image_to_window(game->mlx, game->image, 0, 0);
