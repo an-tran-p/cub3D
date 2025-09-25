@@ -42,5 +42,6 @@ int parse_map(t_list *map_start_node, t_data *data);
 int build_map_grid(t_list *map_start_node, t_data *data);
 int validate_walls(t_data *data);
 int validate_map_connectivity(t_data *data);
+void	free_map_copy(char **map_copy, int	i);
 
 #endif

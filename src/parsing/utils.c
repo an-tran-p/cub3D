@@ -42,3 +42,10 @@ int has_map_chars(char *line)
 	}
 	return (has_map_chars);
 }
+
+void free_map_copy(char **map_copy, int i)
+{
+	while (--i >= 0)
+		free(map_copy[i]);
+	free(map_copy);
+}
