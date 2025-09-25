@@ -41,7 +41,7 @@ char **build_map_copy(int height, t_data *data)
 		map_copy[i] = ft_strdup(map[i]);
 		if (!map_copy[i])
 		{
-			free_map_copy(map_copy, i - 1);
+			free_map(map_copy, i);
 			return (NULL);
 		}
 		i++;
@@ -107,9 +107,9 @@ int validate_map_connectivity(t_data *data)
 	flood_fill_connectivity(map_copy, col, row, height, width);
 	if (validate_visited(map_copy) != 0)
 	{
-		free_map_copy(map_copy, height);
+		free_map(map_copy, height);
 		return (1);
 	}
-	free_map_copy(map_copy, height);
+	free_map(map_copy, height);
 	return (0);
 }

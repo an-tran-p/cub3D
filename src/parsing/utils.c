@@ -43,9 +43,9 @@ int has_map_chars(char *line)
 	return (has_map_chars);
 }
 
-void free_map_copy(char **map_copy, int i)
+void free_map(char **map, int i)
 {
 	while (--i >= 0)
-		free(map_copy[i]);
-	free(map_copy);
+		free(map[i]);
+	free(map);
 }
