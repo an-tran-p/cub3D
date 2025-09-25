@@ -1,9 +1,9 @@
 #include "cub3d.h"
 
-int is_map(char *line)
+int	is_map(char *line)
 {
-	int i;
-	int map_chars;
+	int	i;
+	int	map_chars;
 
 	map_chars = 0;
 	i = 0;
@@ -22,9 +22,9 @@ int is_map(char *line)
 	return (map_chars);
 }
 
-int get_line_length(char *line)
+int	get_line_length(char *line)
 {
-	int last_index;
+	int	last_index;
 
 	last_index = ft_strlen(line) - 1;
 	while (last_index >= 0 && line[last_index] == ' ')
@@ -32,11 +32,11 @@ int get_line_length(char *line)
 	return (last_index + 1);
 }
 
-int validate_player(char *line, t_data *data)
+int	validate_player(char *line, t_data *data)
 {
-	int i;
-	int player_count;
-	char direction;
+	int		i;
+	int		player_count;
+	char	direction;
 
 	i = 0;
 	player_count = 0;
@@ -65,9 +65,9 @@ int validate_player(char *line, t_data *data)
 	return (0);
 }
 
-int parse_map(t_list *map_start_node, t_data *data)
+int	parse_map(t_list *map_start_node, t_data *data)
 {
-	t_list *curr;
+	t_list	*curr;
 	int max_width;
 	int num_lines;
 	char *line;
@@ -110,8 +110,5 @@ int parse_map(t_list *map_start_node, t_data *data)
 		return (1);
 	if (validate_map_connectivity(data) != 0)
 		return (1);
-	printf("width - %d\n", data->map.width);
-	printf("height - %d\n", data->map.height);
-	printf("position - %c\n", data->map.direction);
 	return (0);
 }
