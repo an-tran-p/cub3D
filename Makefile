@@ -18,7 +18,8 @@ LIBFT = $(LIBFT_PATH)/libft.a
 OBJS_PATH = obj
 
 SRCS = src/main.c src/parsing/validate_arg.c src/parsing/utils.c src/parsing/parser.c  src/parsing/color_parser.c \
- src/parsing/texture_parser.c src/parsing/map_parser.c src/parsing/wall_check.c src/parsing/map_connectivity.c
+ src/parsing/texture_parser.c src/parsing/map_parser.c src/parsing/wall_check.c src/parsing/map_connectivity.c \
+ src/raycasting/game.c src/raycasting/handle_keyhook.c src/raycasting/player.c
 
 # Add under SRCS paths like this - src/parsing/utils.c
 
