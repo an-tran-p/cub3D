@@ -5,8 +5,15 @@
 
 typedef struct s_coords
 {
-	int x;
-	int y;
+	float		x;
+	float		y;
+	float		angle;
+	bool		up;
+	bool		down;
+	bool		left;
+	bool		right;
+	bool		l_rotate;
+	bool		r_rotate;
 } t_coords;
 
 typedef struct s_map
