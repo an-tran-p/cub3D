@@ -16,6 +16,10 @@ typedef struct s_game
 {
 	void	*mlx;
 	void	*image;
+    mlx_image_t *no_wall;
+    mlx_image_t *so_wall;
+    mlx_image_t *ea_wall;
+    mlx_image_t *we_wall;
 	t_data	*data;
 }			t_game;
 
@@ -28,5 +32,8 @@ void		move_player(t_coords *player, t_game *game);
 void		game_loop(void *param);
 void		casting_ray(t_game *game);
 bool		touch(float px, float py, t_map map);
+
+void	load_and_resize_textures(t_game *game);
+void	error_exit_game(char *msg, t_game *game);
 
 #endif
