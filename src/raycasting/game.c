@@ -95,6 +95,7 @@ void	init_game(t_game *game, t_coords *player)
 		draw_block(player->x, player->y, 1, 0xFF0000FF, game);
 		draw_map(game, game->data->map.map_data);
 	}
+    load_and_resize_textures(game);
 	mlx_image_to_window(game->mlx, game->image, 0, 0);
 	mlx_key_hook(game->mlx, handle_keyhook, player);
 	mlx_loop_hook(game->mlx, game_loop, game);
