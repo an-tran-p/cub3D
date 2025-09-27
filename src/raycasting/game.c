@@ -84,6 +84,7 @@ void	casting_ray(t_game *game)
 
 void	init_game(t_game *game, t_coords *player)
 {
+    mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", true);
 	if (!game->mlx)
 		return ;
