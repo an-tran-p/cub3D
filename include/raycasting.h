@@ -10,7 +10,33 @@
 
 # define BLOCK 128
 
+# define VERTICAL_WALL 0
+# define HORIZONTAL_WALL 1
+
 # define CUB2D 0
+
+typedef enum e_wall_side
+{
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST
+}				t_wall_side;
+
+typedef struct s_ray
+{
+	float		angle;
+	float		ray_x;
+	float		ray_y;
+	int			step_x;
+	int			step_y;
+	float		dist;
+	float		height;
+	int			start_y;
+	int			end;
+	int			wall;
+	t_wall_side	side;
+}				t_ray;
 
 typedef struct s_game
 {
@@ -31,7 +57,7 @@ void			draw_ray_2d(t_coords *player, t_game *game, float start_x);
 void			handle_keyhook(mlx_key_data_t keydata, void *param);
 void			move_player(t_coords *player, t_game *game);
 void			game_loop(void *param);
-void			casting_ray(t_game *game);
+void			render_frame(t_game *game);
 bool			touch(float px, float py, t_map map);
 
 void			load_and_resize_textures(t_game *game);

@@ -34,12 +34,16 @@ void	key_release(mlx_key_data_t keydata, t_coords *player)
 
 void	handle_keyhook(mlx_key_data_t keydata, void *param)
 {
+	t_game		*game;
 	t_coords	*player;
 
-	player = (t_coords *)param;
-	if (keydata.action == MLX_PRESS)
+	game = (t_game *)param;
+	player = &game->data->map.player;
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		mlx_close_window(game->mlx);
+	if (keydata.key != MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		key_press(keydata, player);
-	else if (keydata.action == MLX_RELEASE)
+	else if (keydata.key != MLX_KEY_ESCAPE && keydata.action == MLX_RELEASE)
 		key_release(keydata, player);
 }
 
@@ -64,6 +68,6 @@ void	game_loop(void *param)
 		draw_block(player->x, player->y, 1, 0xFF0000FF, game);
 		draw_map(game, game->data->map.map_data);
 	}
-	casting_ray(game);
+	render_frame(game);
 	mlx_image_to_window(game->mlx, game->image, 0, 0);
 }
