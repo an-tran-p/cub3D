@@ -28,6 +28,7 @@ void	view_3d(t_coords *player, t_game *game, float start_x, int i)
 	int		end;
 	float	ray_x;
 	float	ray_y;
+    int     y;
 
 	ray_x = player->x + cos(start_x) * player->radius;
 	ray_y = player->y + sin(start_x) * player->radius;
@@ -42,11 +43,25 @@ void	view_3d(t_coords *player, t_game *game, float start_x, int i)
 	end = start_y + height;
 	if (start_y < 0)
 		start_y = 0;
+    //Draw ceiling (top to wall start)
+    y = 0;
+    while (y < start_y)
+    {
+        mlx_put_pixel(game->image, i, y, game->data->c_color);
+        y++;
+    }
 	while (start_y < end && start_y < HEIGHT)
 	{
 		mlx_put_pixel(game->image, i, start_y, 0x0000FFFF);
 		start_y++;
 	}
+    //Draw floor (wall end to bottom)
+    y = end;
+    while (y < HEIGHT)
+    {
+        mlx_put_pixel(game->image, i, y, game->data->f_color);
+        y++;
+    }
 }
 
 void	casting_ray(t_game *game)
