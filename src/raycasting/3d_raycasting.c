@@ -1,70 +1,134 @@
 #include "cub3d.h"
 
-float	distance(float x, float y)
+void	distance_to_next_grid(t_ray *ray, t_coords *player, float *dis_grid_x,
+		float *dis_grid_y)
 {
-	return (sqrt(x * x + y * y));
+	// Step direction along X
+	if (cos(ray->angle) < 0)
+	{
+		ray->step_x = -1;
+		*dis_grid_x = player->x - (int)player->x;
+	}
+	else
+	{
+		ray->step_x = 1;
+		*dis_grid_x = ((int)player->x + 1) - player->x;
+	}
+	// Step direction along Y
+	if (sin(ray->angle) < 0)
+	{
+		ray->step_y = -1;
+		*dis_grid_y = player->y - (int)player->y;
+	}
+	else
+	{
+		ray->step_y = 1;
+		*dis_grid_y = ((int)player->y + 1) - player->y;
+	}
+	// Normalize by ray direction
+	*dis_grid_x = *dis_grid_x / fabs(cos(ray->angle));
+	*dis_grid_y = *dis_grid_y / fabs(sin(ray->angle));
 }
 
-float	fixed_dist(float ray_x, float ray_y, t_coords *player)
+void	calculate_distance_to_wall(t_ray *ray, t_coords *player, t_game *game)
 {
-	float	delta_x;
-	float	delta_y;
-	float	angle;
-	float	fix_dist;
+	int		map_x;
+	int		map_y;
+	float	dis_grid_x;
+	float	dis_grid_y;
 
-	delta_x = ray_x - player->x;
-	delta_y = ray_y - player->y;
-	angle = atan2(delta_y, delta_x) - player->angle;
-	fix_dist = distance(delta_x, delta_y) * cos(angle);
-	if (fix_dist < 0.1f)
-		fix_dist = 0.1f;
-	return (fix_dist);
+	map_x = (int)player->x;
+	map_y = (int)player->y;
+	dis_grid_x = 0;
+	dis_grid_y = 0;
+	distance_to_next_grid(ray, player, &dis_grid_x, &dis_grid_y);
+	// DDA loop
+	ray->wall = VERTICAL_WALL;
+	while (!touch(map_x, map_y, game->data->map))
+	{
+		if (dis_grid_x < dis_grid_y)
+		{
+			dis_grid_x = dis_grid_x + fabs(1 / cos(ray->angle));
+			map_x = map_x + ray->step_x;
+			ray->wall = VERTICAL_WALL;
+		}
+		else
+		{
+			dis_grid_y = dis_grid_y + fabs(1 / sin(ray->angle));
+			map_y = map_y + ray->step_y;
+			ray->wall = HORIZONTAL_WALL;
+		}
+	}
+	// Perpendicular distance to wall
+	if (ray->wall == VERTICAL_WALL)
+		ray->dist = (map_x - player->x + (1 - ray->step_x) / 2.0f)
+			/ cos(ray->angle);
+	else
+		ray->dist = (map_y - player->y + (1 - ray->step_y) / 2.0f)
+			/ sin(ray->angle);
+}
+
+t_ray	casting_ray(t_coords *player, t_game *game, float start_x)
+{
+	t_ray	ray;
+
+	ray.angle = start_x;
+	calculate_distance_to_wall(&ray, player, game);
+	ray.ray_x = player->x + cos(ray.angle) * ray.dist;
+	ray.ray_y = player->y + sin(ray.angle) * ray.dist;
+	ray.height = (BLOCK * (WIDTH / 2) / tan((M_PI / 3) / 2)) / ray.dist;
+	ray.start_y = (HEIGHT - ray.height) / 2;
+	if (ray.start_y < 0)
+		ray.start_y = 0;
+	ray.end = ray.start_y + ray.height;
+	if (ray.wall == VERTICAL_WALL)
+	{
+		ray.side = EAST;
+		if (cos(ray.angle) > 0)
+			ray.side = WEST;
+	}
+	else
+	{
+		if (sin(ray.angle) > 0)
+			ray.side = NORTH;
+		else
+			ray.side = SOUTH;
+	}
+	return (ray);
 }
 
 void	view_3d(t_coords *player, t_game *game, float start_x, int i)
 {
-	float	height;
-	int		start_y;
-	int		end;
-	float	ray_x;
-	float	ray_y;
-    int     y;
+	t_ray	ray;
+	int		y;
 
-	ray_x = player->x + cos(start_x) * player->radius;
-	ray_y = player->y + sin(start_x) * player->radius;
-	while (!touch(ray_x, ray_y, game->data->map))
+	// Draw ceiling (top to wall start)
+	ray = casting_ray(player, game, start_x);
+	y = -1;
+	while (y++ < ray.start_y)
+		mlx_put_pixel(game->image, i, y, game->data->c_color);
+	while (ray.start_y < ray.end && ray.start_y < HEIGHT)
 	{
-		ray_x += cos(start_x) * 0.5f;
-		ray_y += sin(start_x) * 0.5f;
+		if (ray.side == NORTH)
+			mlx_put_pixel(game->image, i, ray.start_y, 0x0000FFFF);
+		if (ray.side == SOUTH)
+			mlx_put_pixel(game->image, i, ray.start_y, 0x00FF00FF);
+		if (ray.side == EAST)
+			mlx_put_pixel(game->image, i, ray.start_y, 0xFF0000FF);
+		if (ray.side == WEST)
+			mlx_put_pixel(game->image, i, ray.start_y, 0xFFFF00FF);
+		ray.start_y++;
 	}
-	height = (BLOCK * (WIDTH / 2) / tan((M_PI / 3) / 2)) / fixed_dist(ray_x,
-			ray_y, player);
-	start_y = (HEIGHT - height) / 2;
-	end = start_y + height;
-	if (start_y < 0)
-		start_y = 0;
-    //Draw ceiling (top to wall start)
-    y = 0;
-    while (y < start_y)
-    {
-        mlx_put_pixel(game->image, i, y, game->data->c_color);
-        y++;
-    }
-	while (start_y < end && start_y < HEIGHT)
+	// Draw floor (wall end to bottom)
+	y = ray.end;
+	while (y < HEIGHT)
 	{
-		mlx_put_pixel(game->image, i, start_y, 0x0000FFFF);
-		start_y++;
+		mlx_put_pixel(game->image, i, y, game->data->f_color);
+		y++;
 	}
-    //Draw floor (wall end to bottom)
-    y = end;
-    while (y < HEIGHT)
-    {
-        mlx_put_pixel(game->image, i, y, game->data->f_color);
-        y++;
-    }
 }
 
-void	casting_ray(t_game *game)
+void	render_frame(t_game *game)
 {
 	float		fraction;
 	float		start_x;
