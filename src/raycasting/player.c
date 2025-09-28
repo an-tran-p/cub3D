@@ -3,15 +3,9 @@
 void	player_angle_update(t_coords *player, float angle_speed)
 {
 	if (player->l_rotate)
-	{
 		player->angle -= angle_speed;
-		// player->l_rotate = false;
-	}
 	if (player->r_rotate)
-	{
 		player->angle += angle_speed;
-		// player->r_rotate = false;
-	}
 	if (player->angle > 2 * M_PI)
 		player->angle = 0;
 	if (player->angle < 0)
@@ -23,50 +17,49 @@ void	calculate_new_xy(t_coords *player, int speed, float *new_x,
 {
 	if (player->up)
 	{
-		printf("old x: %f, y: %f\n", player->x, player->y);
 		*new_x = player->x + cos(player->angle) * speed;
 		*new_y = player->y + sin(player->angle) * speed;
-		printf("new x: %f, y: %f\n", *new_x, *new_y);
 	}
 	if (player->down)
 	{
-		printf("old x: %f, y: %f\n", player->x, player->y);
 		*new_x = player->x - cos(player->angle) * speed;
 		*new_y = player->y - sin(player->angle) * speed;
-		printf("new x: %f, y: %f\n", *new_x, *new_y);
 	}
 	if (player->left)
 	{
-		printf("old x: %f, y: %f\n", player->x, player->y);
 		*new_x = player->x + sin(player->angle) * speed;
 		*new_y = player->y - cos(player->angle) * speed;
-		printf("new x: %f, y: %f\n", *new_x, *new_y);
 	}
 	if (player->right)
 	{
-		printf("old x: %f, y: %f\n", player->x, player->y);
 		*new_x = player->x - sin(player->angle) * speed;
 		*new_y = player->y + cos(player->angle) * speed;
-		printf("new x: %f, y: %f\n", *new_x, *new_y);
 	}
 }
 
-bool	is_wall(float new_x, float new_y, t_map *map)
+bool	is_wall_with_radius(float new_x, float new_y, t_map *map)
 {
-	int	map_x;
-	int	map_y;
+	int		check_point;
+	int		check_x;
+	int		check_y;
+	float	angle;
+	int		i;
 
-	map_x = (int)(new_x / BLOCK);
-	map_y = (int)(new_y / BLOCK);
-	printf("BEFORE IF: the new coor is %c\n", map->map_data[map_y][map_x]);
-	printf("map height is %d, map width is %d\n", map->height, map->width);
-	if (map_y >= 0 && map_y < map->height && map_x >= 0 && map_x < map->width
-		&& map->map_data[map_y][map_x] == '0')
+	check_point = 8;
+	i = 0;
+	while (i < check_point)
 	{
-		printf("the new coor is %c\n", map->map_data[map_y][map_x]);
-		return (false);
+		angle = 2 * M_PI / check_point * i;
+		check_x = (int)((new_x + cos(angle) * map->player.radius) / BLOCK);
+		check_y = (int)((new_y + sin(angle) * map->player.radius) / BLOCK);
+		if (check_y < 0 || check_y >= map->height || check_x < 0
+			|| check_x >= map->width)
+			return (true);
+		if (map->map_data[check_y][check_x] == '1')
+			return (true);
+		i++;
 	}
-	return (true);
+	return (false);
 }
 
 void	update_pos(t_coords *player, int speed, t_map *map)
@@ -74,11 +67,13 @@ void	update_pos(t_coords *player, int speed, t_map *map)
 	float	new_x;
 	float	new_y;
 
+	new_x = player->x;
+	new_y = player->y;
 	calculate_new_xy(player, speed, &new_x, &new_y);
-	if (!is_wall(new_x, new_y, map))
+	if (!is_wall_with_radius(new_x, new_y, map))
 	{
-		map->player.x = new_x;
-		map->player.y = new_y;
+		player->x = new_x;
+		player->y = new_y;
 	}
 }
 
@@ -88,7 +83,9 @@ void	move_player(t_coords *player, t_game *game)
 	float	angle_speed;
 
 	speed = BLOCK / 16;
-	angle_speed = 0.5;
-	player_angle_update(player, angle_speed);
-	update_pos(player, speed, &game->data->map);
+	angle_speed = 0.1;
+	if (player->l_rotate || player->r_rotate)
+		player_angle_update(player, angle_speed);
+	if (player->up || player->down || player->right || player->left)
+		update_pos(player, speed, &game->data->map);
 }

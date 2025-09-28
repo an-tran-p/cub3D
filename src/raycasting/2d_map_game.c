@@ -34,6 +34,20 @@ void	draw_map(t_game *game, char **map)
 	}
 }
 
+bool	touch(float px, float py, t_map map)
+{
+	int	x;
+	int	y;
+
+	x = px / BLOCK;
+	y = py / BLOCK;
+	if (y < 0 || y >= map.height || x < 0 || x >= map.width)
+		return (true);
+	if (map.map_data[y][x] == '1')
+		return (true);
+	return (false);
+}
+
 void	draw_ray_2d(t_coords *player, t_game *game, float start_x)
 {
 	float	ray_x;
