@@ -52,7 +52,10 @@ void	game_loop(void *param)
 	player = &game->data->map.player;
 	move_player(player, game);
 	if (game->image)
+	{
 		mlx_delete_image(game->mlx, game->image);
+		game->image = NULL;
+	}
 	game->image = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if (!game->image)
 		return ;
