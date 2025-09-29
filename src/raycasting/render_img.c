@@ -14,12 +14,13 @@ void	load_and_resize_img(t_game *game, char *src_path, mlx_image_t **dst)
 		error_exit_game("MLX failed to initialize\n", game);
 	}
 	mlx_delete_texture(texture);
-	if (!mlx_resize_image(*dst, BLOCK, BLOCK))
+	if (!mlx_resize_image(*dst, game->tex_size, game->tex_size))
 		error_exit_game("Failed to resize texture\n", game);
 }
 
 void	load_and_resize_textures(t_game *game)
 {
+	game->tex_size = BLOCK * 32;
 	load_and_resize_img(game, game->data->no_path, &game->no_wall);
 	load_and_resize_img(game, game->data->so_path, &game->so_wall);
 	load_and_resize_img(game, game->data->we_path, &game->we_wall);
