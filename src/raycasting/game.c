@@ -14,8 +14,8 @@ void init_game(t_game *game, t_coords *player)
 	if (!game->image)
 		return;
 
-	map_scale_x = MINIMAP_WIDTH /game->data->map.width;
-	map_scale_y = MINIMAP_HEIGHT /game->data->map.height;
+	map_scale_x = MINIMAP_WIDTH / game->data->map.width;
+	map_scale_y = MINIMAP_HEIGHT / game->data->map.height;
 	if (map_scale_x < map_scale_y)
 		game->minimap_scale = map_scale_x;
 	else
@@ -23,11 +23,11 @@ void init_game(t_game *game, t_coords *player)
 	game->mini_map = mlx_new_image(game->mlx, MINIMAP_WIDTH, MINIMAP_HEIGHT);
 	if (!game->mini_map)
 		return;
-	if (CUB2D)
-	{
-		draw_block(player->x, player->y, 1, 0xFF0000FF, game);
-		draw_map(game, game->data->map.map_data);
-	}
+	// if (CUB2D)
+	// {
+	// 	draw_block(player->x, player->y, 1, 0xFF0000FF, game);
+	// 	draw_map(game, game->data->map.map_data);
+	// }
 	load_and_resize_textures(game);
 	mlx_image_to_window(game->mlx, game->image, 0, 0);
 	mlx_image_to_window(game->mlx, game->mini_map, 10, 10);

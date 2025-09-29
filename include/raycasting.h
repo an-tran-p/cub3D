@@ -13,8 +13,6 @@
 # define VERTICAL_WALL 0
 # define HORIZONTAL_WALL 1
 
-# define CUB2D 0
-
 # define MINIMAP_WIDTH	400
 # define MINIMAP_HEIGHT	200
 

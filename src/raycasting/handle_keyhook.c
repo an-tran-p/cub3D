@@ -63,16 +63,10 @@ void	game_loop(void *param)
 	// game->image = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	// if (!game->image)
 	// 	return ;
-	if (CUB2D)
-	{
-		draw_block(player->x, player->y, 1, 0xFF0000FF, game);
-		draw_map(game, game->data->map.map_data);
-	}
+	// if (CUB2D)
+	// {
+	// 	draw_block(player->x, player->y, 1, 0xFF0000FF, game);
+	// 	draw_map(game, game->data->map.map_data);
+	// }
 	render_frame(game);
-	for (int y = 0; y < MINIMAP_HEIGHT; y++)
-	{
-		for (int x = 0; x < MINIMAP_WIDTH; x++)
-			mlx_put_pixel(game->mini_map, x, y, 0x00FF00FF);
-	}
-	// mlx_image_to_window(game->mlx, game->image, 0, 0);
 }

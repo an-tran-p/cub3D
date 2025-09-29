@@ -164,6 +164,8 @@ void	render_frame(t_game *game)
 	t_coords	*player;
 	int			i;
 	int			max;
+    int         map_pl_x;
+    int         map_pl_y;
 
 	player = &game->data->map.player;
 	fraction = M_PI / 3 / (game->data->map.width * BLOCK);
@@ -173,13 +175,15 @@ void	render_frame(t_game *game)
 		max = game->data->map.width * BLOCK;
 	else
 		max = WIDTH;
+    draw_map(game, game->data->map.map_data);
 	while (i < max)
 	{
-		if (CUB2D)
-			draw_ray_2d(player, game, start_x);
-		if (!CUB2D)
-			view_3d(player, game, start_x, i);
+        view_3d(player, game, start_x, i);
+        draw_ray_2d(player, game, start_x);
 		start_x += fraction;
 		i++;
 	}
+    map_pl_x = (player->x / BLOCK) * game->minimap_scale;
+    map_pl_y = (player->y / BLOCK) * game->minimap_scale;
+    draw_block(map_pl_x, map_pl_y, 2, 0xFF0000FF, game);
 }
