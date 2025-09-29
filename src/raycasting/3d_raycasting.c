@@ -97,6 +97,41 @@ t_ray	casting_ray(t_coords *player, t_game *game, float start_x)
 	return (ray);
 }
 
+void	put_wall_texture(t_ray *ray, t_game *game, int y, int i)
+{
+	int			d;
+	float		wall_x;
+	int			tex_x;
+	int			tex_y;
+	uint32_t	pixel_color;
+
+	// calculate x coordinate in the wall
+	if (ray->side == NORTH || ray->side == SOUTH)
+		wall_x = fmod(ray->ray_x, BLOCK) / (float)BLOCK;
+	else
+		wall_x = fmod(ray->ray_y, BLOCK) / (float)BLOCK;
+	// calculate x coordinate in texture
+	tex_x = (int)(wall_x * (float)game->tex_size);
+	// calculate corresponding y in the texture
+	d = y - ray->start_y;
+	tex_y = (int)((float)d / ray->height * game->tex_size);
+	// get pixel clor from x & y coordinate in the texture
+	if (ray->side == NORTH)
+		pixel_color = ((uint32_t *)game->no_wall->pixels)[tex_y * game->tex_size
+			+ tex_x];
+	else if (ray->side == SOUTH)
+		pixel_color = ((uint32_t *)game->so_wall->pixels)[tex_y * game->tex_size
+			+ tex_x];
+	else if (ray->side == EAST)
+		pixel_color = ((uint32_t *)game->ea_wall->pixels)[tex_y * game->tex_size
+			+ tex_x];
+	else
+		pixel_color = ((uint32_t *)game->we_wall->pixels)[tex_y * game->tex_size
+			+ tex_x];
+	pixel_color = pixel_color | 0xFF000000;
+	mlx_put_pixel(game->image, i, y, pixel_color);
+}
+
 void	view_3d(t_coords *player, t_game *game, float start_x, int i)
 {
 	t_ray	ray;
@@ -107,17 +142,11 @@ void	view_3d(t_coords *player, t_game *game, float start_x, int i)
 	y = -1;
 	while (y++ < ray.start_y)
 		mlx_put_pixel(game->image, i, y, game->data->c_color);
-	while (ray.start_y < ray.end && ray.start_y < HEIGHT)
+	y = ray.start_y;
+	while (y < ray.end && y < HEIGHT)
 	{
-		if (ray.side == NORTH)
-			mlx_put_pixel(game->image, i, ray.start_y, 0x0000FFFF);
-		if (ray.side == SOUTH)
-			mlx_put_pixel(game->image, i, ray.start_y, 0x00FF00FF);
-		if (ray.side == EAST)
-			mlx_put_pixel(game->image, i, ray.start_y, 0xFF0000FF);
-		if (ray.side == WEST)
-			mlx_put_pixel(game->image, i, ray.start_y, 0xFFFF00FF);
-		ray.start_y++;
+		put_wall_texture(&ray, game, y, i);
+		y++;
 	}
 	// Draw floor (wall end to bottom)
 	y = ray.end;

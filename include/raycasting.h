@@ -42,6 +42,7 @@ typedef struct s_game
 {
 	void		*mlx;
 	void		*image;
+	int			tex_size;
 	mlx_image_t	*no_wall;
 	mlx_image_t	*so_wall;
 	mlx_image_t	*ea_wall;
