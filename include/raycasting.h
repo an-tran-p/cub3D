@@ -8,7 +8,7 @@
 # define WIDTH 1920
 # define HEIGHT 1080
 
-# define BLOCK 128
+# define BLOCK 256
 
 # define VERTICAL_WALL 0
 # define HORIZONTAL_WALL 1
