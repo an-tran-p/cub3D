@@ -26,7 +26,7 @@ void	draw_map(t_game *game, char **map)
     for (int y = 0; y < MINIMAP_HEIGHT; y++)
 	{
 		for (int x = 0; x < MINIMAP_WIDTH; x++)
-			mlx_put_pixel(game->mini_map, x, y, 0x202020FF);
+			mlx_put_pixel(game->mini_map, x, y, 0x00000000);
 	}
 	while (map[i])
 	{

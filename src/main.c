@@ -13,7 +13,6 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	game.data = &data;
-	data.map.player.angle = 3 * M_PI / 2;
 	data.map.player.x *= BLOCK;
 	data.map.player.y *= BLOCK;
 	init_game(&game, &data.map.player);

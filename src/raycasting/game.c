@@ -23,11 +23,6 @@ void init_game(t_game *game, t_coords *player)
 	game->mini_map = mlx_new_image(game->mlx, MINIMAP_WIDTH, MINIMAP_HEIGHT);
 	if (!game->mini_map)
 		return;
-	// if (CUB2D)
-	// {
-	// 	draw_block(player->x, player->y, 1, 0xFF0000FF, game);
-	// 	draw_map(game, game->data->map.map_data);
-	// }
 	load_and_resize_textures(game);
 	mlx_image_to_window(game->mlx, game->image, 0, 0);
 	mlx_image_to_window(game->mlx, game->mini_map, 10, 10);
