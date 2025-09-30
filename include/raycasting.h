@@ -13,7 +13,8 @@
 # define VERTICAL_WALL 0
 # define HORIZONTAL_WALL 1
 
-# define CUB2D 0
+# define MINIMAP_WIDTH	400
+# define MINIMAP_HEIGHT	200
 
 typedef enum e_wall_side
 {
@@ -43,6 +44,8 @@ typedef struct s_game
 	void		*mlx;
 	void		*image;
 	int			tex_size;
+	mlx_image_t	*mini_map;
+	int			minimap_scale;
 	mlx_image_t	*no_wall;
 	mlx_image_t	*so_wall;
 	mlx_image_t	*ea_wall;

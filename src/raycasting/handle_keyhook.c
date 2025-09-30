@@ -55,19 +55,5 @@ void	game_loop(void *param)
 	game = (t_game *)param;
 	player = &game->data->map.player;
 	move_player(player, game);
-	if (game->image)
-	{
-		mlx_delete_image(game->mlx, game->image);
-		game->image = NULL;
-	}
-	game->image = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-	if (!game->image)
-		return ;
-	if (CUB2D)
-	{
-		draw_block(player->x, player->y, 1, 0xFF0000FF, game);
-		draw_map(game, game->data->map.map_data);
-	}
 	render_frame(game);
-	mlx_image_to_window(game->mlx, game->image, 0, 0);
 }
