@@ -70,9 +70,9 @@ float	add_angle(t_data *data)
 
 	dir = data->map.direction;
 	if (dir == 'N')
-		return(M_PI / 2);
+		return(3 * M_PI / 2);
 	else if (dir == 'S')
-		return (3 * M_PI) / 2;
+		return (M_PI / 2);
 	else if (dir == 'W')
 		return(M_PI);
 	else
