@@ -98,6 +98,14 @@ t_ray	casting_ray(t_coords *player, t_game *game, float start_x)
 	return (ray);
 }
 
+uint32_t	get_image_pixel(mlx_image_t *img, int x, int y)
+{
+    uint8_t	*px;
+
+	px = &img->pixels[(y * img->width + x) * 4];
+    return (px[0] << 24 | px[1] << 16 | px[2] << 8 | px[3]);
+}
+
 void	put_wall_texture(t_ray *ray, t_game *game, int y, int i)
 {
 	int			d;
@@ -118,18 +126,13 @@ void	put_wall_texture(t_ray *ray, t_game *game, int y, int i)
 	tex_y = (int)((float)d / ray->height * game->tex_size);
 	// get pixel clor from x & y coordinate in the texture
 	if (ray->side == NORTH)
-		pixel_color = ((uint32_t *)game->no_wall->pixels)[tex_y * game->tex_size
-			+ tex_x];
+		pixel_color = get_image_pixel(game->no_wall, tex_x, tex_y);
 	else if (ray->side == SOUTH)
-		pixel_color = ((uint32_t *)game->so_wall->pixels)[tex_y * game->tex_size
-			+ tex_x];
+		pixel_color = get_image_pixel(game->so_wall, tex_x, tex_y);
 	else if (ray->side == EAST)
-		pixel_color = ((uint32_t *)game->ea_wall->pixels)[tex_y * game->tex_size
-			+ tex_x];
+		pixel_color = get_image_pixel(game->ea_wall, tex_x, tex_y);
 	else
-		pixel_color = ((uint32_t *)game->we_wall->pixels)[tex_y * game->tex_size
-			+ tex_x];
-	pixel_color = pixel_color | 0xFF000000;
+		pixel_color = get_image_pixel(game->we_wall, tex_x, tex_y);
 	mlx_put_pixel(game->image, i, y, pixel_color);
 }
 

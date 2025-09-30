@@ -20,7 +20,7 @@ void	load_and_resize_img(t_game *game, char *src_path, mlx_image_t **dst)
 
 void	load_and_resize_textures(t_game *game)
 {
-	game->tex_size = BLOCK * 32;
+	game->tex_size = BLOCK * 8;
 	load_and_resize_img(game, game->data->no_path, &game->no_wall);
 	load_and_resize_img(game, game->data->so_path, &game->so_wall);
 	load_and_resize_img(game, game->data->we_path, &game->we_wall);
