@@ -84,16 +84,16 @@ t_ray	casting_ray(t_coords *player, t_game *game, float start_x)
 	ray.end = ray.start_y + ray.height;
 	if (ray.wall == VERTICAL_WALL)
 	{
-		ray.side = EAST;
+		ray.side = WEST;
 		if (cos(ray.angle) > 0)
-			ray.side = WEST;
+			ray.side = EAST;
 	}
 	else
 	{
 		if (sin(ray.angle) > 0)
-			ray.side = NORTH;
-		else
 			ray.side = SOUTH;
+		else
+			ray.side = NORTH;
 	}
 	return (ray);
 }
