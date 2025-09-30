@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-void init_game(t_game *game, t_coords *player)
+void	init_game(t_game *game, t_coords *player)
 {
 	int	map_scale_x;
 	int	map_scale_y;
@@ -9,11 +9,10 @@ void init_game(t_game *game, t_coords *player)
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", true);
 	if (!game->mlx)
-		return;
+		return ;
 	game->image = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	if (!game->image)
-		return;
-
+		return ;
 	map_scale_x = MINIMAP_WIDTH / game->data->map.width;
 	map_scale_y = MINIMAP_HEIGHT / game->data->map.height;
 	if (map_scale_x < map_scale_y)
@@ -22,7 +21,7 @@ void init_game(t_game *game, t_coords *player)
 		game->minimap_scale = map_scale_y;
 	game->mini_map = mlx_new_image(game->mlx, MINIMAP_WIDTH, MINIMAP_HEIGHT);
 	if (!game->mini_map)
-		return;
+		return ;
 	load_and_resize_textures(game);
 	mlx_image_to_window(game->mlx, game->image, 0, 0);
 	mlx_image_to_window(game->mlx, game->mini_map, 10, 10);
