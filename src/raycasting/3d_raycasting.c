@@ -100,10 +100,10 @@ t_ray	casting_ray(t_coords *player, t_game *game, float start_x)
 
 uint32_t	get_image_pixel(mlx_image_t *img, int x, int y)
 {
-    uint8_t	*px;
+	uint8_t	*px;
 
 	px = &img->pixels[(y * img->width + x) * 4];
-    return (px[0] << 24 | px[1] << 16 | px[2] << 8 | px[3]);
+	return (px[0] << 24 | px[1] << 16 | px[2] << 8 | px[3]);
 }
 
 void	put_wall_texture(t_ray *ray, t_game *game, int y, int i)
@@ -113,6 +113,7 @@ void	put_wall_texture(t_ray *ray, t_game *game, int y, int i)
 	int			tex_x;
 	int			tex_y;
 	uint32_t	pixel_color;
+	float		actual_start;
 
 	// calculate x coordinate in the wall
 	if (ray->side == NORTH || ray->side == SOUTH)
@@ -121,10 +122,16 @@ void	put_wall_texture(t_ray *ray, t_game *game, int y, int i)
 		wall_x = fmod(ray->ray_y, BLOCK) / (float)BLOCK;
 	// calculate x coordinate in texture
 	tex_x = (int)(wall_x * (float)game->tex_size);
-	// calculate corresponding y in the texture
-	d = y - ray->start_y;
+	// Account for clamping when calculating texture y
+	actual_start = (HEIGHT - ray->height) / 2; // Can be negative
+	d = y - actual_start;                      // Use unclamped start
 	tex_y = (int)((float)d / ray->height * game->tex_size);
-	// get pixel clor from x & y coordinate in the texture
+	// Clamp texture coordinates
+	if (tex_y < 0)
+		tex_y = 0;
+	if (tex_y >= game->tex_size)
+		tex_y = game->tex_size - 1;
+	// get pixel color from x & y coordinate in the texture
 	if (ray->side == NORTH)
 		pixel_color = get_image_pixel(game->no_wall, tex_x, tex_y);
 	else if (ray->side == SOUTH)
