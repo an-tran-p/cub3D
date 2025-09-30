@@ -56,14 +56,11 @@ int	validate_player(char *line, t_data *data)
 	{
 		if (data->map.direction != 0)
 			return (print_error(MSG_TOO_MANY_PLAYERS), 1);
-		else
-		{
-			data->map.direction = direction;
-			return (0);
-		}
+		data->map.direction = direction;
 	}
 	return (0);
 }
+
 float	add_angle(t_data *data)
 {
 	char dir;
@@ -78,47 +75,61 @@ float	add_angle(t_data *data)
 	else
 		return (0);
 }
-
-int	parse_map(t_list *map_start_node, t_data *data)
+int process_single_line(char *line, int *max_width, int *has_empty_line, t_data *data)
 {
-	t_list	*curr;
+    int res_map;
+    int line_len;
+
+    res_map = is_map(line);
+    if (!res_map)
+        (*has_empty_line)++;
+    else if (res_map == 2)
+        return (1);
+    else if (res_map == 1)
+    {
+        if (*has_empty_line)
+            return (print_error(MSG_EMPTY_LINES), 1);
+        if (validate_player(line, data) != 0)
+            return (1);
+    }
+    line_len = get_line_length(line);
+    if (*max_width < line_len)
+        *max_width = line_len;
+    return (0);
+}
+
+int scan_map_structure(t_list *map_start_node, t_data *data)
+{
+    t_list	*curr;
 	int max_width;
 	int num_lines;
 	char *line;
 	int has_empty_line;
-	int res_map;
-	int line_len;
 
-	curr = map_start_node;
+    curr = map_start_node;
 	has_empty_line = 0;
 	max_width = 0;
 	num_lines = 0;
-	while (curr)
+    while (curr)
 	{
 		line = (char *)curr->content;
-		res_map = is_map(line);
-		if (!res_map)
-			has_empty_line++;
-		else if (res_map == 2)
-			return (1);
-		else if (res_map == 1)
-		{
-			if (has_empty_line)
-				return (print_error(MSG_EMPTY_LINES), 1);
-			if (validate_player(line, data) != 0)
-				return (1);
-		}
+        if (process_single_line(line, &max_width, &has_empty_line, data) != 0)
+            return (1);
 		num_lines++;
-		line_len = get_line_length(line);
-		if (max_width < line_len)
-			max_width = line_len;
 		curr = curr->next;
 	}
-	if (data->map.direction == 0)
-		return (print_error(MSG_NO_PLAYER), 1);
-	data->map.height = num_lines - has_empty_line;
+    data->map.height = num_lines - has_empty_line;
 	data->map.width = max_width;
 	data->map.player.angle = add_angle(data);
+    return (0);
+}
+
+int	parse_map(t_list *map_start_node, t_data *data)
+{
+    if (scan_map_structure(map_start_node, data) != 0)
+        return (1);
+	if (data->map.direction == 0)
+		return (print_error(MSG_NO_PLAYER), 1);
 	if (build_map_grid(map_start_node, data) != 0)
 		return (1);
 	if (validate_walls(data) != 0)
