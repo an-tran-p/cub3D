@@ -76,7 +76,8 @@ t_ray	casting_ray(t_coords *player, t_game *game, float start_x)
 	calculate_distance_to_wall(&ray, player, game);
 	ray.ray_x = player->x + cos(ray.angle) * ray.dist;
 	ray.ray_y = player->y + sin(ray.angle) * ray.dist;
-	ray.height = (BLOCK * (WIDTH / 2) / tan((M_PI / 3) / 2)) / ray.dist;
+	ray.height = (BLOCK * (WIDTH / 2) / tan((M_PI / 3) / 2)) / (ray.dist
+			* cos(ray.angle - player->angle));
 	ray.start_y = (HEIGHT - ray.height) / 2;
 	if (ray.start_y < 0)
 		ray.start_y = 0;
@@ -164,26 +165,26 @@ void	render_frame(t_game *game)
 	t_coords	*player;
 	int			i;
 	int			max;
-    int         map_pl_x;
-    int         map_pl_y;
+	int			map_pl_x;
+	int			map_pl_y;
 
 	player = &game->data->map.player;
-	fraction = M_PI / 3 / (game->data->map.width * BLOCK);
 	start_x = player->angle - M_PI / 6;
 	i = 0;
 	if (game->data->map.width * BLOCK < WIDTH)
 		max = game->data->map.width * BLOCK;
 	else
 		max = WIDTH;
-    draw_map(game, game->data->map.map_data);
+	fraction = M_PI / 3 / max;
+	draw_map(game, game->data->map.map_data);
 	while (i < max)
 	{
-        view_3d(player, game, start_x, i);
-        draw_ray_2d(player, game, start_x);
+		view_3d(player, game, start_x, i);
+		draw_ray_2d(player, game, start_x);
 		start_x += fraction;
 		i++;
 	}
-    map_pl_x = (player->x / BLOCK) * game->minimap_scale;
-    map_pl_y = (player->y / BLOCK) * game->minimap_scale;
-    draw_block(map_pl_x, map_pl_y, 2, 0xFF0000FF, game);
+	map_pl_x = (player->x / BLOCK) * game->minimap_scale;
+	map_pl_y = (player->y / BLOCK) * game->minimap_scale;
+	draw_block(map_pl_x, map_pl_y, 2, 0xFF0000FF, game);
 }
