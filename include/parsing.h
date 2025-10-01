@@ -48,9 +48,13 @@ int				save_texture(char **texture_path, char *line, int id_pos,
 int				is_map(char *line);
 int				has_map_chars(char *line);
 int				parse_map(t_list *map_start_node, t_data *data);
+int	            scan_map_structure(t_list *map_start_node, t_data *data);
+int	            check_required_elements(t_data *data);
 int				build_map_grid(t_list *map_start_node, t_data *data);
 int				validate_walls(t_data *data);
+int	            is_internal_space(char **map, int row, int col);
 int				validate_map_connectivity(t_data *data);
+int	            validate_texture_line(char *line, int id_pos);
 void			free_map(char **map_copy, int i);
 
 #endif

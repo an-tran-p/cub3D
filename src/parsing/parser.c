@@ -102,26 +102,6 @@ int	parse_identifiers(t_list *head, t_data *data)
 	return (0);
 }
 
-int	check_required_elements(t_data *data)
-{
-	int	has_error;
-
-	has_error = 0;
-	if (!data->no_path && print_error(MSG_MISSING_NO))
-		has_error = 1;
-	if (!data->so_path && print_error(MSG_MISSING_SO))
-		has_error = 1;
-	if (!data->ea_path && print_error(MSG_MISSING_EA))
-		has_error = 1;
-	if (!data->we_path && print_error(MSG_MISSING_WE))
-		has_error = 1;
-	if (data->f_color == (uint32_t)-1 && print_error(MSG_MISSING_F))
-		has_error = 1;
-	if (data->c_color == (uint32_t)-1 && print_error(MSG_MISSING_C))
-		has_error = 1;
-	return (has_error);
-}
-
 int	parse_scene(int fd, t_data *data)
 {
 	t_list	*head_list;

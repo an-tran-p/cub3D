@@ -1,27 +1,5 @@
 #include "cub3d.h"
 
-int	is_map(char *line)
-{
-	int	i;
-	int	map_chars;
-
-	map_chars = 0;
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '1' || line[i] == '0' || line[i] == 'S' || line[i] == 'N'
-			|| line[i] == 'E' || line[i] == 'W')
-			map_chars = 1;
-		else if (line[i] != ' ')
-		{
-			print_error("Invalid map characters\n");
-			return (2);
-		}
-		i++;
-	}
-	return (map_chars);
-}
-
 int	get_line_length(char *line)
 {
 	int	last_index;
@@ -75,6 +53,7 @@ float	add_angle(t_data *data)
 	else
 		return (0);
 }
+
 int	process_single_line(char *line, int *max_width, int *has_empty_line,
 		t_data *data)
 {
@@ -122,20 +101,5 @@ int	scan_map_structure(t_list *map_start_node, t_data *data)
 	data->map.height = num_lines - has_empty_line;
 	data->map.width = max_width;
 	data->map.player.angle = add_angle(data);
-	return (0);
-}
-
-int	parse_map(t_list *map_start_node, t_data *data)
-{
-	if (scan_map_structure(map_start_node, data) != 0)
-		return (1);
-	if (data->map.direction == 0)
-		return (print_error(MSG_NO_PLAYER), 1);
-	if (build_map_grid(map_start_node, data) != 0)
-		return (1);
-	if (validate_walls(data) != 0)
-		return (1);
-	if (validate_map_connectivity(data) != 0)
-		return (1);
 	return (0);
 }

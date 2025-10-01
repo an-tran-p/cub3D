@@ -49,6 +49,7 @@ char	**build_map_copy(int height, t_data *data)
 	}
 	return (map_copy);
 }
+
 void	flood_fill_connectivity(char **map, int col, int row, int height,
 		int width)
 {
@@ -80,7 +81,7 @@ int	validate_visited(char **map_copy)
 		{
 			if (map_copy[i][j] == '1' || map_copy[i][j] == '0')
 			{
-				print_error("Map contant outside the enclosed area\n");
+				print_error("Map contains unreachable areas\n");
 				return (1);
 			}
 			j++;
