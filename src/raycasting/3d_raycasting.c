@@ -184,10 +184,10 @@ void	render_frame(t_game *game)
 	player = &game->data->map.player;
 	start_x = player->angle - M_PI / 6;
 	i = 0;
-	/* if (game->data->map.width * BLOCK < WIDTH)
+	if (game->data->map.width * BLOCK < WIDTH)
 		max = game->data->map.width * BLOCK;
-	else */
-	max = WIDTH;
+	else
+		max = WIDTH;
 	fraction = M_PI / 3 / max;
 	draw_map(game, game->data->map.map_data);
 	while (i < max)

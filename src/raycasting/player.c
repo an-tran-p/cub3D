@@ -82,7 +82,7 @@ void	move_player(t_coords *player, t_game *game)
 	int		speed;
 	float	angle_speed;
 
-	speed = BLOCK / 16;
+	speed = BLOCK / 8;
 	angle_speed = 0.1;
 	if (player->l_rotate || player->r_rotate)
 		player_angle_update(player, angle_speed);
