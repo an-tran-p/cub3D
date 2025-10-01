@@ -66,12 +66,15 @@ void	calculate_distance_to_wall(t_ray *ray, t_coords *player, t_game *game)
 	else
 		ray->dist = (map_y - player->y + (1 - ray->step_y) / 2.0f)
 			/ sin(ray->angle);
+	if (ray->dist < 0.0001)
+		ray->dist = 0.001;
 }
 
 t_ray	casting_ray(t_coords *player, t_game *game, float start_x)
 {
 	t_ray	ray;
 
+	memset(&ray, 0, sizeof(t_ray));
 	ray.angle = start_x;
 	calculate_distance_to_wall(&ray, player, game);
 	ray.ray_x = player->x + cos(ray.angle) * ray.dist;

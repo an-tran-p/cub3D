@@ -13,6 +13,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	game.data = &data;
+	game.big_block = WIDTH / data.map.width;
 	data.map.player.x *= BLOCK;
 	data.map.player.y *= BLOCK;
 	init_game(&game, &data.map.player);
