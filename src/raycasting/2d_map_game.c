@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   2d_map_game.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atran <atran@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/01 15:20:05 by atran             #+#    #+#             */
+/*   Updated: 2025/10/01 16:34:49 by atran            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	draw_block(int x, int y, int size, uint32_t color, t_game *game)
@@ -20,13 +32,21 @@ void	draw_map(t_game *game, char **map)
 	int	i;
 	int	j;
 	int	block;
+	int	x;
+	int	y;
 
 	i = 0;
 	block = game->minimap_scale;
-	for (int y = 0; y < MINIMAP_HEIGHT; y++)
+	y = 0;
+	while (y < MINIMAP_HEIGHT)
 	{
-		for (int x = 0; x < MINIMAP_WIDTH; x++)
+		x = 0;
+		while (x < MINIMAP_WIDTH)
+		{
 			mlx_put_pixel(game->mini_map, x, y, 0x00000000);
+			x++;
+		}
+		y++;
 	}
 	while (map[i])
 	{
