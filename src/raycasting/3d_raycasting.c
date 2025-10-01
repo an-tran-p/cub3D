@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   3d_raycasting.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atran <atran@student.hive.fi>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/01 15:20:08 by atran             #+#    #+#             */
+/*   Updated: 2025/10/01 15:20:09 by atran            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	distance_to_next_grid(t_ray *ray, t_coords *player, float *dis_grid_x,
 		float *dis_grid_y)
 {
-	// Step direction along X
 	if (cos(ray->angle) < 0)
 	{
 		ray->step_x = -1;
@@ -14,7 +25,6 @@ void	distance_to_next_grid(t_ray *ray, t_coords *player, float *dis_grid_x,
 		ray->step_x = 1;
 		*dis_grid_x = ((int)player->x + 1) - player->x;
 	}
-	// Step direction along Y
 	if (sin(ray->angle) < 0)
 	{
 		ray->step_y = -1;
@@ -25,7 +35,6 @@ void	distance_to_next_grid(t_ray *ray, t_coords *player, float *dis_grid_x,
 		ray->step_y = 1;
 		*dis_grid_y = ((int)player->y + 1) - player->y;
 	}
-	// Normalize by ray direction
 	*dis_grid_x = *dis_grid_x / fabs(cos(ray->angle));
 	*dis_grid_y = *dis_grid_y / fabs(sin(ray->angle));
 }
@@ -42,7 +51,6 @@ void	calculate_distance_to_wall(t_ray *ray, t_coords *player, t_game *game)
 	dis_grid_x = 0;
 	dis_grid_y = 0;
 	distance_to_next_grid(ray, player, &dis_grid_x, &dis_grid_y);
-	// DDA loop
 	ray->wall = VERTICAL_WALL;
 	while (!touch(map_x, map_y, game->data->map))
 	{
@@ -59,7 +67,6 @@ void	calculate_distance_to_wall(t_ray *ray, t_coords *player, t_game *game)
 			ray->wall = HORIZONTAL_WALL;
 		}
 	}
-	// Perpendicular distance to wall
 	if (ray->wall == VERTICAL_WALL)
 		ray->dist = (map_x - player->x + (1 - ray->step_x) / 2.0f)
 			/ cos(ray->angle);
@@ -118,23 +125,18 @@ void	put_wall_texture(t_ray *ray, t_game *game, int y, int i)
 	uint32_t	pixel_color;
 	float		actual_start;
 
-	// calculate x coordinate in the wall
 	if (ray->side == NORTH || ray->side == SOUTH)
 		wall_x = fmod(ray->ray_x, BLOCK) / (float)BLOCK;
 	else
 		wall_x = fmod(ray->ray_y, BLOCK) / (float)BLOCK;
-	// calculate x coordinate in texture
 	tex_x = (int)(wall_x * (float)game->tex_size);
-	// Account for clamping when calculating texture y
-	actual_start = (HEIGHT - ray->height) / 2; // Can be negative
-	d = y - actual_start;                      // Use unclamped start
+	actual_start = (HEIGHT - ray->height) / 2;
+	d = y - actual_start;
 	tex_y = (int)((float)d / ray->height * game->tex_size);
-	// Clamp texture coordinates
 	if (tex_y < 0)
 		tex_y = 0;
 	if (tex_y >= game->tex_size)
 		tex_y = game->tex_size - 1;
-	// get pixel color from x & y coordinate in the texture
 	if (ray->side == NORTH)
 		pixel_color = get_image_pixel(game->no_wall, tex_x, tex_y);
 	else if (ray->side == SOUTH)
@@ -151,7 +153,6 @@ void	view_3d(t_coords *player, t_game *game, float start_x, int i)
 	t_ray	ray;
 	int		y;
 
-	// Draw ceiling (top to wall start)
 	ray = casting_ray(player, game, start_x);
 	y = -1;
 	while (y++ < ray.start_y)
@@ -162,7 +163,6 @@ void	view_3d(t_coords *player, t_game *game, float start_x, int i)
 		put_wall_texture(&ray, game, y, i);
 		y++;
 	}
-	// Draw floor (wall end to bottom)
 	y = ray.end;
 	while (y < HEIGHT)
 	{
@@ -184,10 +184,7 @@ void	render_frame(t_game *game)
 	player = &game->data->map.player;
 	start_x = player->angle - M_PI / 6;
 	i = 0;
-	if (game->data->map.width * BLOCK < WIDTH)
-		max = game->data->map.width * BLOCK;
-	else
-		max = WIDTH;
+	max = WIDTH;
 	fraction = M_PI / 3 / max;
 	draw_map(game, game->data->map.map_data);
 	while (i < max)
