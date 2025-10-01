@@ -12,7 +12,7 @@ t_list	*read_file_to_list(int fd)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-			break;
+			break ;
 		ptr = ft_strchr(line, '\n');
 		if (ptr)
 			*ptr = '\0';
@@ -30,14 +30,12 @@ t_list	*read_file_to_list(int fd)
 
 int	parse_color_ids(char *line, int i, t_data *data)
 {
-	if (line[i] == 'F' && (line[i + 1] == ' ' ||
-						   line[i + 1] == '\0'))
+	if (line[i] == 'F' && (line[i + 1] == ' ' || line[i + 1] == '\0'))
 	{
 		if (save_color(&data->f_color, line + i + 2) != 0)
 			return (1);
 	}
-	else if (line[i] == 'C' && (line[i + 1] == ' ' ||
-								line[i + 1] == '\0'))
+	else if (line[i] == 'C' && (line[i + 1] == ' ' || line[i + 1] == '\0'))
 	{
 		if (save_color(&data->c_color, line + i + 2) != 0)
 			return (1);
@@ -91,14 +89,14 @@ int	parse_identifiers(t_list *head, t_data *data)
 		if (line[0] == '\0')
 		{
 			curr = curr->next;
-			continue;
+			continue ;
 		}
 		while (line[i] == ' ')
 			i++;
 		if (handle_identifiers(line, i, data, curr) != 0)
 			return (1);
 		if (data->map_start_node)
-			break;
+			break ;
 		curr = curr->next;
 	}
 	return (0);
@@ -137,8 +135,8 @@ int	parse_scene(int fd, t_data *data)
 	data->f_color = (uint32_t)-1;
 	data->c_color = (uint32_t)-1;
 	status = 0;
-	if (parse_identifiers(head_list, data) != 0 ||
-		check_required_elements(data) != 0)
+	if (parse_identifiers(head_list, data) != 0
+		|| check_required_elements(data) != 0)
 		status = 1;
 	else if (data->map_start_node == NULL)
 		status = (print_error("Map is missing\n"), 1);

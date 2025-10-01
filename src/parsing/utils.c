@@ -1,15 +1,15 @@
 #include "cub3d.h"
 
-int print_error(char *err_msg)
+int	print_error(char *err_msg)
 {
 	ft_putstr_fd("Error\n", STDERR_FILENO);
 	ft_putstr_fd(err_msg, STDERR_FILENO);
 	return (1);
 }
 
-void free_data(t_data *data)
+void	free_data(t_data *data)
 {
-	int rows;
+	int	rows;
 
 	rows = data->map.height;
 	free(data->no_path);
@@ -24,10 +24,10 @@ void free_data(t_data *data)
 	}
 }
 
-int has_map_chars(char *line)
+int	has_map_chars(char *line)
 {
-	int i;
-	int has_map_chars;
+	int	i;
+	int	has_map_chars;
 
 	i = 0;
 	has_map_chars = 0;
@@ -35,7 +35,6 @@ int has_map_chars(char *line)
 	{
 		if (line[i] == ',' || line[i] == '.' || line[i] == '/')
 			return (0);
-
 		if (line[i] == '1' || line[i] == '0')
 			has_map_chars = 1;
 		i++;
@@ -43,7 +42,7 @@ int has_map_chars(char *line)
 	return (has_map_chars);
 }
 
-void free_map(char **map, int i)
+void	free_map(char **map, int i)
 {
 	while (--i >= 0)
 		free(map[i]);

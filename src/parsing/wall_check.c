@@ -92,9 +92,11 @@ int	validate_walls(t_data *data)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] == '0' || map[i][j] == 'S' || map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'W')
+			if (map[i][j] == '0' || map[i][j] == 'S' || map[i][j] == 'N'
+				|| map[i][j] == 'E' || map[i][j] == 'W')
 			{
-				if (check_adjacent_cells(map, i, j, data) != 0 || check_diagonal_cells(map, i, j) != 0)
+				if (check_adjacent_cells(map, i, j, data) != 0
+					|| check_diagonal_cells(map, i, j) != 0)
 					return (1);
 			}
 			j++;
