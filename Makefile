@@ -5,7 +5,7 @@ CC = cc
 FLAGS = -Werror -Wextra -Wall -Wunreachable-code -O3 -ffast-math
 LDFLAGS = -ldl -lglfw -pthread -lm
 
-HEADERS = -I./include -I./lib/libft -I./lib/MLX42/include
+HEADERS = -I./include -I./lib/libft -I./lib/MLX42/include -g
 
 #Paths
 MLX_PATH = ./lib/MLX42

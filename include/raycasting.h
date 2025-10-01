@@ -5,16 +5,16 @@
 #  define M_PI 3.14159265358979323846
 # endif
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 600
+# define HEIGHT 400
 
-# define BLOCK 256
+# define BLOCK 64
 
 # define VERTICAL_WALL 0
 # define HORIZONTAL_WALL 1
 
-# define MINIMAP_WIDTH	400
-# define MINIMAP_HEIGHT	200
+# define MINIMAP_WIDTH 400
+# define MINIMAP_HEIGHT 200
 
 typedef enum e_wall_side
 {
@@ -46,6 +46,7 @@ typedef struct s_game
 	int			tex_size;
 	mlx_image_t	*mini_map;
 	int			minimap_scale;
+	int			big_block;
 	mlx_image_t	*no_wall;
 	mlx_image_t	*so_wall;
 	mlx_image_t	*ea_wall;
