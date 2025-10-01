@@ -54,7 +54,7 @@ typedef struct s_game
 	t_data		*data;
 }				t_game;
 
-void			init_game(t_game *game, t_coords *player);
+void			init_game(t_game *game);
 void			draw_block(int x, int y, int size, uint32_t color,
 					t_game *game);
 void			draw_map(t_game *game, char **map);
