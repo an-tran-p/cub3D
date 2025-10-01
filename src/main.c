@@ -12,6 +12,7 @@ int	main(int argc, char **argv)
 		free_data(&data);
 		return (1);
 	}
+	ft_memset(&game, 0, sizeof(t_game));
 	game.data = &data;
 	game.big_block = WIDTH / data.map.width;
 	data.map.player.x *= BLOCK;

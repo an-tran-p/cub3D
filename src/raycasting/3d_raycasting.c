@@ -74,7 +74,7 @@ t_ray	casting_ray(t_coords *player, t_game *game, float start_x)
 {
 	t_ray	ray;
 
-	memset(&ray, 0, sizeof(t_ray));
+	ft_memset(&ray, 0, sizeof(t_ray));
 	ray.angle = start_x;
 	calculate_distance_to_wall(&ray, player, game);
 	ray.ray_x = player->x + cos(ray.angle) * ray.dist;
@@ -184,10 +184,10 @@ void	render_frame(t_game *game)
 	player = &game->data->map.player;
 	start_x = player->angle - M_PI / 6;
 	i = 0;
-	if (game->data->map.width * BLOCK < WIDTH)
+	/* if (game->data->map.width * BLOCK < WIDTH)
 		max = game->data->map.width * BLOCK;
-	else
-		max = WIDTH;
+	else */
+	max = WIDTH;
 	fraction = M_PI / 3 / max;
 	draw_map(game, game->data->map.map_data);
 	while (i < max)
