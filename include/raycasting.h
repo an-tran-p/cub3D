@@ -5,10 +5,10 @@
 #  define M_PI 3.14159265358979323846
 # endif
 
-# define WIDTH 600
-# define HEIGHT 400
+# define WIDTH 1920
+# define HEIGHT 1080
 
-# define BLOCK 64
+# define BLOCK 512
 
 # define VERTICAL_WALL 0
 # define HORIZONTAL_WALL 1
