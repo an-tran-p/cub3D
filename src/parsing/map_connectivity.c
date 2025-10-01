@@ -1,10 +1,10 @@
 #include "cub3d.h"
 
-void find_player_coords(t_data *data)
+void	find_player_coords(t_data *data)
 {
-	char **map;
-	int i;
-	int j;
+	char	**map;
+	int		i;
+	int		j;
 
 	i = 0;
 	map = data->map.map_data;
@@ -13,11 +13,12 @@ void find_player_coords(t_data *data)
 		j = 0;
 		while (map[i][j])
 		{
-			if (map[i][j] == 'S' || map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'W')
+			if (map[i][j] == 'S' || map[i][j] == 'N' || map[i][j] == 'E'
+				|| map[i][j] == 'W')
 			{
-				data->map.player.x = j;
-				data->map.player.y = i;
-				return;
+				data->map.player.x = j + 0.5;
+				data->map.player.y = i + 0.5;
+				return ;
 			}
 			j++;
 		}
@@ -25,11 +26,11 @@ void find_player_coords(t_data *data)
 	}
 }
 
-char **build_map_copy(int height, t_data *data)
+char	**build_map_copy(int height, t_data *data)
 {
-	char **map_copy;
-	char **map;
-	int i;
+	char	**map_copy;
+	char	**map;
+	int		i;
 
 	i = 0;
 	map = data->map.map_data;
@@ -48,13 +49,15 @@ char **build_map_copy(int height, t_data *data)
 	}
 	return (map_copy);
 }
-void flood_fill_connectivity(char **map, int col, int row, int height, int width)
+void	flood_fill_connectivity(char **map, int col, int row, int height,
+		int width)
 {
 	if (col < 0 || row < 0 || col >= width || row >= height)
-		return;
+		return ;
 	if (map[row][col] == ' ' || map[row][col] == 'V')
-		return;
-	if (map[row][col] == '1' || map[row][col] == '0' || map[row][col] == 'S' || map[row][col] == 'N' || map[row][col] == 'E' || map[row][col] == 'W')
+		return ;
+	if (map[row][col] == '1' || map[row][col] == '0' || map[row][col] == 'S'
+		|| map[row][col] == 'N' || map[row][col] == 'E' || map[row][col] == 'W')
 	{
 		map[row][col] = 'V';
 		flood_fill_connectivity(map, col + 1, row, height, width);
@@ -64,10 +67,10 @@ void flood_fill_connectivity(char **map, int col, int row, int height, int width
 	}
 }
 
-int validate_visited(char **map_copy)
+int	validate_visited(char **map_copy)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (map_copy[i])
@@ -87,13 +90,13 @@ int validate_visited(char **map_copy)
 	return (0);
 }
 
-int validate_map_connectivity(t_data *data)
+int	validate_map_connectivity(t_data *data)
 {
-	char **map_copy;
-	int col;
-	int row;
-	int height;
-	int width;
+	char	**map_copy;
+	int		col;
+	int		row;
+	int		height;
+	int		width;
 
 	find_player_coords(data);
 	map_copy = build_map_copy(data->map.height, data);

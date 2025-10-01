@@ -5,7 +5,7 @@ void	init_game(t_game *game, t_coords *player)
 	int	map_scale_x;
 	int	map_scale_y;
 
-	player->radius = BLOCK / 10;
+	player->radius = BLOCK / 20;
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	game->mlx = mlx_init(WIDTH, HEIGHT, "cub3D", true);
 	if (!game->mlx)
