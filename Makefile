@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: atran <atran@student.hive.fi>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/10/02 11:07:12 by atran             #+#    #+#              #
+#    Updated: 2025/10/02 11:07:14 by atran            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = cub3D
 
 CC = cc
@@ -20,7 +32,8 @@ OBJS_PATH = obj
 SRCS = src/main.c src/parsing/validate_arg.c src/parsing/utils.c src/parsing/parser.c  src/parsing/color_parser.c \
  src/parsing/texture_parser.c src/parsing/map_parser.c src/parsing/wall_check.c src/parsing/map_connectivity.c \
  src/raycasting/game.c src/raycasting/handle_keyhook.c src/raycasting/player.c src/raycasting/2d_map_game.c \
- src/raycasting/render_img.c src/raycasting/safe_exit.c src/raycasting/3d_raycasting.c
+ src/raycasting/render_img.c src/raycasting/safe_exit.c src/raycasting/3d_raycasting.c src/raycasting/DDA_calculation.c\
+ src/raycasting/utils.c
 
 # Add under SRCS paths like this - src/parsing/utils.c
 

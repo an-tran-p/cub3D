@@ -6,114 +6,18 @@
 /*   By: atran <atran@student.hive.fi>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 15:20:08 by atran             #+#    #+#             */
-/*   Updated: 2025/10/01 15:20:09 by atran            ###   ########.fr       */
+/*   Updated: 2025/10/02 10:54:09 by atran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	distance_to_next_grid(t_ray *ray, t_coords *player, float *dis_grid_x,
-		float *dis_grid_y)
+void	calculate_wall_x(float *wall_x, t_ray *ray)
 {
-	if (cos(ray->angle) < 0)
-	{
-		ray->step_x = -1;
-		*dis_grid_x = player->x - (int)player->x;
-	}
+	if (ray->side == NORTH || ray->side == SOUTH)
+		*wall_x = fmod(ray->ray_x, BLOCK) / (float)BLOCK;
 	else
-	{
-		ray->step_x = 1;
-		*dis_grid_x = ((int)player->x + 1) - player->x;
-	}
-	if (sin(ray->angle) < 0)
-	{
-		ray->step_y = -1;
-		*dis_grid_y = player->y - (int)player->y;
-	}
-	else
-	{
-		ray->step_y = 1;
-		*dis_grid_y = ((int)player->y + 1) - player->y;
-	}
-	*dis_grid_x = *dis_grid_x / fabs(cos(ray->angle));
-	*dis_grid_y = *dis_grid_y / fabs(sin(ray->angle));
-}
-
-void	calculate_distance_to_wall(t_ray *ray, t_coords *player, t_game *game)
-{
-	int		map_x;
-	int		map_y;
-	float	dis_grid_x;
-	float	dis_grid_y;
-
-	map_x = (int)player->x;
-	map_y = (int)player->y;
-	dis_grid_x = 0;
-	dis_grid_y = 0;
-	distance_to_next_grid(ray, player, &dis_grid_x, &dis_grid_y);
-	ray->wall = VERTICAL_WALL;
-	while (!touch(map_x, map_y, game->data->map))
-	{
-		if (dis_grid_x < dis_grid_y)
-		{
-			dis_grid_x = dis_grid_x + fabs(1 / cos(ray->angle));
-			map_x = map_x + ray->step_x;
-			ray->wall = VERTICAL_WALL;
-		}
-		else
-		{
-			dis_grid_y = dis_grid_y + fabs(1 / sin(ray->angle));
-			map_y = map_y + ray->step_y;
-			ray->wall = HORIZONTAL_WALL;
-		}
-	}
-	if (ray->wall == VERTICAL_WALL)
-		ray->dist = (map_x - player->x + (1 - ray->step_x) / 2.0f)
-			/ cos(ray->angle);
-	else
-		ray->dist = (map_y - player->y + (1 - ray->step_y) / 2.0f)
-			/ sin(ray->angle);
-	if (ray->dist < 0.0001)
-		ray->dist = 0.001;
-}
-
-t_ray	casting_ray(t_coords *player, t_game *game, float start_x)
-{
-	t_ray	ray;
-
-	ft_memset(&ray, 0, sizeof(t_ray));
-	ray.angle = start_x;
-	calculate_distance_to_wall(&ray, player, game);
-	ray.ray_x = player->x + cos(ray.angle) * ray.dist;
-	ray.ray_y = player->y + sin(ray.angle) * ray.dist;
-	ray.height = (BLOCK * (WIDTH / 2) / tan((M_PI / 3) / 2)) / (ray.dist
-			* cos(ray.angle - player->angle));
-	ray.start_y = (HEIGHT - ray.height) / 2;
-	if (ray.start_y < 0)
-		ray.start_y = 0;
-	ray.end = ray.start_y + ray.height;
-	if (ray.wall == VERTICAL_WALL)
-	{
-		ray.side = WEST;
-		if (cos(ray.angle) > 0)
-			ray.side = EAST;
-	}
-	else
-	{
-		if (sin(ray.angle) > 0)
-			ray.side = SOUTH;
-		else
-			ray.side = NORTH;
-	}
-	return (ray);
-}
-
-uint32_t	get_image_pixel(mlx_image_t *img, int x, int y)
-{
-	uint8_t	*px;
-
-	px = &img->pixels[(y * img->width + x) * 4];
-	return (px[0] << 24 | px[1] << 16 | px[2] << 8 | px[3]);
+		*wall_x = fmod(ray->ray_y, BLOCK) / (float)BLOCK;
 }
 
 void	put_wall_texture(t_ray *ray, t_game *game, int y, int i)
@@ -123,15 +27,10 @@ void	put_wall_texture(t_ray *ray, t_game *game, int y, int i)
 	int			tex_x;
 	int			tex_y;
 	uint32_t	pixel_color;
-	float		actual_start;
 
-	if (ray->side == NORTH || ray->side == SOUTH)
-		wall_x = fmod(ray->ray_x, BLOCK) / (float)BLOCK;
-	else
-		wall_x = fmod(ray->ray_y, BLOCK) / (float)BLOCK;
+	calculate_wall_x(&wall_x, ray);
 	tex_x = (int)(wall_x * (float)game->tex_size);
-	actual_start = (HEIGHT - ray->height) / 2;
-	d = y - actual_start;
+	d = y - (HEIGHT - ray->height) / 2;
 	tex_y = (int)((float)d / ray->height * game->tex_size);
 	if (tex_y < 0)
 		tex_y = 0;
@@ -177,24 +76,18 @@ void	render_frame(t_game *game)
 	float		start_x;
 	t_coords	*player;
 	int			i;
-	int			max;
-	int			map_pl_x;
-	int			map_pl_y;
 
 	player = &game->data->map.player;
 	start_x = player->angle - M_PI / 6;
 	i = 0;
-	max = WIDTH;
-	fraction = M_PI / 3 / max;
+	fraction = M_PI / 3 / WIDTH;
 	draw_map(game, game->data->map.map_data);
-	while (i < max)
+	while (i < WIDTH)
 	{
 		view_3d(player, game, start_x, i);
 		draw_ray_2d(player, game, start_x);
 		start_x += fraction;
 		i++;
 	}
-	map_pl_x = (player->x / BLOCK) * game->minimap_scale;
-	map_pl_y = (player->y / BLOCK) * game->minimap_scale;
-	draw_block(map_pl_x, map_pl_y, 2, 0xFF0000FF, game);
+	draw_2d_player(game);
 }
