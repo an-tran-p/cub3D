@@ -24,6 +24,13 @@ typedef enum e_wall_side
 	EAST
 }				t_wall_side;
 
+typedef struct s_block
+{
+	int			x;
+	int			y;
+	int			size;
+}				t_block;
+
 typedef struct s_ray
 {
 	float		angle;
@@ -55,15 +62,17 @@ typedef struct s_game
 }				t_game;
 
 void			init_game(t_game *game);
-void			draw_block(int x, int y, int size, uint32_t color,
-					t_game *game);
+void			draw_block(t_block *block, uint32_t color, t_game *game);
 void			draw_map(t_game *game, char **map);
 void			draw_ray_2d(t_coords *player, t_game *game, float start_x);
+void			draw_2d_player(t_game *game);
 void			handle_keyhook(mlx_key_data_t keydata, void *param);
 void			move_player(t_coords *player, t_game *game);
 void			game_loop(void *param);
 void			render_frame(t_game *game);
+t_ray			casting_ray(t_coords *player, t_game *game, float start_x);
 bool			touch(float px, float py, t_map map);
+uint32_t		get_image_pixel(mlx_image_t *img, int x, int y);
 
 void			load_and_resize_textures(t_game *game);
 void			error_exit_game(char *msg, t_game *game);
