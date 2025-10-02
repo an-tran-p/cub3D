@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 08:42:52 by ikozhina          #+#    #+#             */
-/*   Updated: 2024/11/14 13:49:06 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:53:15 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {

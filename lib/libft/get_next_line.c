@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:58:14 by ikozhina          #+#    #+#             */
-/*   Updated: 2025/04/06 11:47:37 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:53:46 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 static char	*handle_buffer(char *buffer, char *line);
 static int	read_to_buffer(int fd, char *buffer, char **line);

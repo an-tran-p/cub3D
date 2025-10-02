@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/02 09:44:23 by ikozhina          #+#    #+#             */
+/*   Updated: 2025/10/02 10:01:14 by ikozhina         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	print_error(char *err_msg)
@@ -23,6 +35,7 @@ void	free_data(t_data *data)
 		free(data->map.map_data);
 	}
 }
+
 int	is_map(char *line)
 {
 	int	i;

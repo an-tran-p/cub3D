@@ -1,4 +1,14 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   err_msg.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/02 09:50:18 by ikozhina          #+#    #+#             */
+/*   Updated: 2025/10/02 09:56:36 by ikozhina         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef ERR_MSG_H
 # define ERR_MSG_H
@@ -20,7 +30,7 @@
 # define MSG_MISSING_EA "Missing East texture (EA)\n"
 # define MSG_MISSING_F "Missing floor color (F)\n"
 # define MSG_MISSING_C "Missing ceiling color (C)\n"
-# define MSG_TOO_MANY_PLAYERS "Only one player start position allowed in the map\n"
+# define MSG_TOO_MANY_PLAYERS "Only one player start position allowed\n"
 # define MSG_NO_PLAYER "Player start position required\n"
 # define MSG_NO_WALL "The map must be closed by walls\n"
 # define MSG_EMPTY_LINES "Empty lines inside the map are not allowed\n"

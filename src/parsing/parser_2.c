@@ -1,5 +1,16 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/02 09:44:01 by ikozhina          #+#    #+#             */
+/*   Updated: 2025/10/02 09:59:54 by ikozhina         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "cub3d.h"
 
 int	check_identifier(char *line, int i)
 {
@@ -44,8 +55,7 @@ int	validate_texture_line(char *line, int id_pos)
 			while (path_start[i] && path_start[i] == ' ')
 				i++;
 			if (path_start[i] != '\0')
-				return (print_error("Invalid extra characters in a texture line\n"),
-					1);
+				return (print_error("Invalid characters in texture line\n"), 1);
 		}
 		i++;
 	}

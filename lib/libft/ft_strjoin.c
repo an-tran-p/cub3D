@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 09:02:01 by ikozhina          #+#    #+#             */
-/*   Updated: 2024/11/14 13:47:44 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:53:02 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

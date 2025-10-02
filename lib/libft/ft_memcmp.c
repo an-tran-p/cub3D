@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:03:05 by ikozhina          #+#    #+#             */
-/*   Updated: 2024/11/14 13:41:06 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:52:19 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {

@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:48:01 by ikozhina          #+#    #+#             */
-/*   Updated: 2025/03/16 22:19:28 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:55:41 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../libft.h"
+#include "../libft.h"
 
 int	ft_putptr(void *ptr, int base, char l)
 {
