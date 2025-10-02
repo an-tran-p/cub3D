@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 15:07:33 by ikozhina          #+#    #+#             */
-/*   Updated: 2024/11/15 14:58:55 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:52:55 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 char	*ft_strdup(const char *s)
 {

@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 14:18:41 by ikozhina          #+#    #+#             */
-/*   Updated: 2025/03/16 22:19:19 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:55:31 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../libft.h"
+#include "../libft.h"
 
 int	ft_putnbr_unsigned(unsigned long n, int base, char l)
 {

@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:17:22 by ikozhina          #+#    #+#             */
-/*   Updated: 2024/11/14 13:51:23 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:53:39 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 int	ft_toupper(int c)
 {

@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color_parser.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/02 09:43:31 by ikozhina          #+#    #+#             */
+/*   Updated: 2025/10/02 09:43:34 by ikozhina         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-uint32_t get_rgba(int r, int g, int b, int a)
+uint32_t	get_rgba(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-int check_rgb_chars(char *line, int *comma_count, int *digit_num)
+int	check_rgb_chars(char *line, int *comma_count, int *digit_num)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i] && line[i] != '\n')
@@ -31,10 +43,10 @@ int check_rgb_chars(char *line, int *comma_count, int *digit_num)
 	return (0);
 }
 
-int validate_rgb_format(char *line)
+int	validate_rgb_format(char *line)
 {
-	int comma_count;
-	int digit_num;
+	int	comma_count;
+	int	digit_num;
 
 	comma_count = 0;
 	digit_num = 0;
@@ -56,7 +68,7 @@ int validate_rgb_format(char *line)
 	return (0);
 }
 
-int parse_check_rgb_range(char *line, int *i, int *color)
+int	parse_check_rgb_range(char *line, int *i, int *color)
 {
 	while (!ft_isdigit(line[*i]))
 		(*i)++;
@@ -68,12 +80,12 @@ int parse_check_rgb_range(char *line, int *i, int *color)
 	return (0);
 }
 
-int save_color(uint32_t *color, char *line)
+int	save_color(uint32_t *color, char *line)
 {
-	int i;
-	int r;
-	int g;
-	int b;
+	int	i;
+	int	r;
+	int	g;
+	int	b;
 
 	if (*color != (uint32_t)-1)
 		return (print_error("Duplicate color identifier\n"), 1);

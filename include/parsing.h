@@ -1,7 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/02 09:50:31 by ikozhina          #+#    #+#             */
+/*   Updated: 2025/10/02 10:38:58 by ikozhina         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSING_H
 # define PARSING_H
-
-# include <stdio.h>
 
 typedef struct s_coords
 {
@@ -38,6 +48,12 @@ typedef struct s_data
 	t_map		map;
 }				t_data;
 
+typedef struct s_cell
+{
+	int			row;
+	int			col;
+}				t_cell;
+
 int				validate_arg(int argc, char **argv);
 int				print_error(char *err_msg);
 int				parse_scene(int fd, t_data *data);
@@ -48,9 +64,13 @@ int				save_texture(char **texture_path, char *line, int id_pos,
 int				is_map(char *line);
 int				has_map_chars(char *line);
 int				parse_map(t_list *map_start_node, t_data *data);
+int				scan_map_structure(t_list *map_start_node, t_data *data);
+int				check_required_elements(t_data *data);
 int				build_map_grid(t_list *map_start_node, t_data *data);
 int				validate_walls(t_data *data);
+int				is_internal_space(char **map, int row, int col);
 int				validate_map_connectivity(t_data *data);
+int				validate_texture_line(char *line, int id_pos);
 void			free_map(char **map_copy, int i);
 
 #endif

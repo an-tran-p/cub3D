@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 12:35:38 by ikozhina          #+#    #+#             */
-/*   Updated: 2024/11/19 13:47:47 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:53:27 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
