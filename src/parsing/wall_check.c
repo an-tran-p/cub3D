@@ -1,149 +1,87 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wall_check.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/02 09:45:22 by ikozhina          #+#    #+#             */
+/*   Updated: 2025/10/02 10:37:12 by ikozhina         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int	is_internal_space(char *line, int col)
+static int	check_single_cell(t_data *data, t_cell pos, t_cell offset)
 {
-	int	i;
-	int	cont_before;
-	int	cont_after;
+	int		new_row;
+	int		new_col;
+	char	**map;
 
-	i = 0;
-	cont_before = 0;
-	cont_after = 0;
-	while (i < col)
+	map = data->map.map_data;
+	new_row = pos.row + offset.row;
+	new_col = pos.col + offset.col;
+	if (new_col < 0 || new_row < 0 || new_col >= data->map.width
+		|| new_row >= data->map.height)
+		return (print_error(MSG_NO_WALL), 1);
+	if (map[new_row][new_col] == ' ')
 	{
-		if (line[i] != ' ')
-			cont_before = 1;
-		i++;
+		if (is_internal_space(map, new_row, new_col))
+			return (print_error(MSG_EMPTY_SPACES), 1);
+		return (print_error(MSG_NO_WALL), 1);
 	}
-	i = col;
-	while (line[i])
-	{
-		if (line[i] != ' ')
-			cont_after = 1;
-		i++;
-	}
-	if (cont_before && cont_after)
+	return (0);
+}
+
+int	check_adjacent_cells(t_data *data, t_cell pos)
+{
+	if (check_single_cell(data, pos, (t_cell){1, 0}) != 0)
+		return (1);
+	if (check_single_cell(data, pos, (t_cell){-1, 0}) != 0)
+		return (1);
+	if (check_single_cell(data, pos, (t_cell){0, 1}) != 0)
+		return (1);
+	if (check_single_cell(data, pos, (t_cell){0, -1}) != 0)
 		return (1);
 	return (0);
 }
 
-int	check_diagonal_cells(char **map, int row, int col)
+int	check_diagonal_cells(t_data *data, t_cell pos)
 {
-	int	coord[4][2] = {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
-	int	i;
-	int	new_row;
-	int	new_col;
-
-	i = 0;
-	while (i < 4)
-	{
-		new_row = row + coord[i][0];
-		new_col = col + coord[i][1];
-		if (map[new_row][new_col] == ' ')
-		{
-			if (is_internal_space(map[new_row], new_col))
-				return (print_error(MSG_EMPTY_SPACES), 1);
-			return (print_error(MSG_NO_WALL), 1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	check_adjacent_cells(char **map, int row, int col, t_data *data)
-{
-	int	coord[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-	int	i;
-	int	new_row;
-	int	new_col;
-	int	width;
-	int	height;
-
-	i = 0;
-	width = data->map.width;
-	height = data->map.height;
-	while (i < 4)
-	{
-		new_row = row + coord[i][0];
-		new_col = col + coord[i][1];
-		if (new_col < 0 || new_row < 0 || new_col == width || new_row == height)
-			return (print_error(MSG_NO_WALL), 1);
-		if (map[new_row][new_col] == ' ')
-		{
-			if (is_internal_space(map[new_row], new_col))
-				return (print_error(MSG_EMPTY_SPACES), 1);
-			return (print_error(MSG_NO_WALL), 1);
-		}
-		i++;
-	}
+	if (check_single_cell(data, pos, (t_cell){1, 1}) != 0)
+		return (1);
+	if (check_single_cell(data, pos, (t_cell){1, -1}) != 0)
+		return (1);
+	if (check_single_cell(data, pos, (t_cell){-1, 1}) != 0)
+		return (1);
+	if (check_single_cell(data, pos, (t_cell){-1, -1}) != 0)
+		return (1);
 	return (0);
 }
 
 int	validate_walls(t_data *data)
 {
 	char	**map;
-	int		i;
-	int		j;
+	t_cell	pos;
 
-	i = 0;
+	pos.row = 0;
 	map = data->map.map_data;
-	while (map[i])
+	while (map[pos.row])
 	{
-		j = 0;
-		while (map[i][j])
+		pos.col = 0;
+		while (map[pos.row][pos.col])
 		{
-			if (map[i][j] == '0' || map[i][j] == 'S' || map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'W')
+			if (map[pos.row][pos.col] == '0' || map[pos.row][pos.col] == 'S'
+				|| map[pos.row][pos.col] == 'N' || map[pos.row][pos.col] == 'E'
+				|| map[pos.row][pos.col] == 'W')
 			{
-				if (check_adjacent_cells(map, i, j, data) != 0 || check_diagonal_cells(map, i, j) != 0)
+				if (check_adjacent_cells(data, pos) != 0
+					|| check_diagonal_cells(data, pos) != 0)
 					return (1);
 			}
-			j++;
+			pos.col++;
 		}
-		i++;
+		pos.row++;
 	}
-	return (0);
-}
-
-void	fill_map_line(char *dst, char *src, int width)
-{
-	int	j;
-
-	j = 0;
-	while (src[j] && j < width)
-	{
-		dst[j] = src[j];
-		j++;
-	}
-	while (j < width)
-	{
-		dst[j] = ' ';
-		j++;
-	}
-	dst[width] = '\0';
-}
-
-int	build_map_grid(t_list *map_start_node, t_data *data)
-{
-	int		i;
-	char	**map;
-	t_list	*curr;
-	char	*line;
-
-	map = ft_calloc(data->map.height + 1, sizeof(char *));
-	if (!map)
-		return (1);
-	i = 0;
-	curr = map_start_node;
-	while (i < data->map.height && curr)
-	{
-		line = (char *)curr->content;
-		map[i] = malloc(sizeof(char) * (data->map.width + 1));
-		if (!map[i])
-			return (free_map(map, i), 1);
-		fill_map_line(map[i], line, data->map.width);
-		i++;
-		curr = curr->next;
-	}
-	data->map.map_data = map;
 	return (0);
 }

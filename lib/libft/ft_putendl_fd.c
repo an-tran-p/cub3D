@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 10:23:12 by ikozhina          #+#    #+#             */
-/*   Updated: 2024/11/15 15:16:47 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:52:34 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 void	ft_putendl_fd(char *s, int fd)
 {

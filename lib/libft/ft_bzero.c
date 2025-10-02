@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 11:39:46 by ikozhina          #+#    #+#             */
-/*   Updated: 2024/11/14 13:36:27 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:51:25 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 void	ft_bzero(void *s, size_t n)
 {

@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:56:25 by ikozhina          #+#    #+#             */
-/*   Updated: 2024/11/14 13:38:27 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:51:45 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 static size_t	ft_count_len(int n);
 

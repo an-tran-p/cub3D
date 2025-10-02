@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 09:55:09 by ikozhina          #+#    #+#             */
-/*   Updated: 2025/03/16 22:19:16 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:55:28 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../libft.h"
+#include "../libft.h"
 
 int	ft_putchar(char c)
 {

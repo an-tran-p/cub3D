@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 12:02:52 by ikozhina          #+#    #+#             */
-/*   Updated: 2025/03/16 22:19:08 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:55:24 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../libft.h"
+#include "../libft.h"
 
 static int	modify(va_list arg, char l);
 static int	process_str(va_list arg, const char *str, int *size);

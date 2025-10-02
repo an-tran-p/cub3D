@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 10:34:57 by ikozhina          #+#    #+#             */
-/*   Updated: 2025/03/16 22:19:22 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:55:37 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"../libft.h"
+#include "../libft.h"
 
 int	ft_putnbr(int n)
 {

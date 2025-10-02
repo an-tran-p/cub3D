@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/02 09:44:23 by ikozhina          #+#    #+#             */
+/*   Updated: 2025/10/02 10:01:14 by ikozhina         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int print_error(char *err_msg)
+int	print_error(char *err_msg)
 {
 	ft_putstr_fd("Error\n", STDERR_FILENO);
 	ft_putstr_fd(err_msg, STDERR_FILENO);
 	return (1);
 }
 
-void free_data(t_data *data)
+void	free_data(t_data *data)
 {
-	int rows;
+	int	rows;
 
 	rows = data->map.height;
 	free(data->no_path);
@@ -24,10 +36,32 @@ void free_data(t_data *data)
 	}
 }
 
-int has_map_chars(char *line)
+int	is_map(char *line)
 {
-	int i;
-	int has_map_chars;
+	int	i;
+	int	map_chars;
+
+	map_chars = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '1' || line[i] == '0' || line[i] == 'S' || line[i] == 'N'
+			|| line[i] == 'E' || line[i] == 'W')
+			map_chars = 1;
+		else if (line[i] != ' ')
+		{
+			print_error("Invalid map characters\n");
+			return (2);
+		}
+		i++;
+	}
+	return (map_chars);
+}
+
+int	has_map_chars(char *line)
+{
+	int	i;
+	int	has_map_chars;
 
 	i = 0;
 	has_map_chars = 0;
@@ -35,7 +69,6 @@ int has_map_chars(char *line)
 	{
 		if (line[i] == ',' || line[i] == '.' || line[i] == '/')
 			return (0);
-
 		if (line[i] == '1' || line[i] == '0')
 			has_map_chars = 1;
 		i++;
@@ -43,7 +76,7 @@ int has_map_chars(char *line)
 	return (has_map_chars);
 }
 
-void free_map(char **map, int i)
+void	free_map(char **map, int i)
 {
 	while (--i >= 0)
 		free(map[i]);

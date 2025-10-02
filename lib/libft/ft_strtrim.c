@@ -6,11 +6,11 @@
 /*   By: ikozhina <ikozhina@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/10 09:45:13 by ikozhina          #+#    #+#             */
-/*   Updated: 2024/11/15 10:40:12 by ikozhina         ###   ########.fr       */
+/*   Updated: 2025/10/02 09:53:30 by ikozhina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
 static int	set_index(char c, char const *set);
 static char	*copy_string(char const *index_s, char const *index_e);
